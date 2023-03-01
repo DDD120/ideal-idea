@@ -1,22 +1,18 @@
-import { useSocket } from "@/store/socket";
-import { useEffect } from "react";
+import useRoom from "@/hooks/useRoom";
 
 export default function Room() {
-  const socket = useSocket();
-
-  useEffect(() => {
-    socket.emit("join-room", "hi", (message: string) => {
-      console.log(message);
-    });
-
-    return () => {
-      socket.off("join-room");
-    };
-  }, [socket]);
+  const { users, me } = useRoom();
 
   return (
     <div>
       <h1>ROOM</h1>
+      <h2>내 닉네임 : {me.nickname}</h2>
+      <h2>현재 인원 {users.length}</h2>
+      <ul>
+        {users.map((user) => (
+          <li key={user.id}>{user.nickname}</li>
+        ))}
+      </ul>
     </div>
   );
 }
