@@ -1,6 +1,21 @@
 import Head from "next/head";
+import { useRouter } from "next/router";
+import { v4 as uuid } from "uuid";
 
 export default function Home() {
+  const router = useRouter();
+  const handleStartClick = () => {
+    router.push(
+      {
+        pathname: "/room",
+        query: {
+          c: uuid(),
+        },
+      },
+      "/room"
+    );
+  };
+
   return (
     <>
       <Head>
@@ -9,7 +24,10 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className="text-lg">hello world!</main>
+      <main>
+        <h1>로비</h1>
+        <button onClick={handleStartClick}>시작하기</button>
+      </main>
     </>
   );
 }
