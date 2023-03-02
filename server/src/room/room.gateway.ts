@@ -37,6 +37,11 @@ export class RoomGateway implements OnGatewayConnection {
     };
 
     this.server.to(roomId).emit('set-users', [...users, me]);
+    this.server.to(roomId).emit('message', {
+      type: 'notice',
+      nickname: me.nickname,
+      content: `${me.nickname}님이 입장하였습니다.`,
+    });
 
     return me;
   }
@@ -47,6 +52,11 @@ export class RoomGateway implements OnGatewayConnection {
         client.leave(roomId);
         const users = await this.getUsers(roomId);
         this.server.to(roomId).emit('set-users', users);
+        this.server.to(roomId).emit('message', {
+          type: 'notice',
+          nickname: client['nickname'],
+          content: `${client['nickname']}님이 퇴장하였습니다.`,
+        });
       });
     });
   }
@@ -61,7 +71,6 @@ export class RoomGateway implements OnGatewayConnection {
       };
     });
 
-    console.log('');
     return users;
   }
 
@@ -78,5 +87,18 @@ export class RoomGateway implements OnGatewayConnection {
     )[0];
 
     return nickname;
+  }
+
+  @SubscribeMessage('message')
+  async handleMessage(
+    @MessageBody()
+    {
+      roomId,
+      content,
+      nickname,
+    }: { roomId: string; content: string; nickname: string },
+    @ConnectedSocket() client: Socket,
+  ) {
+    client.to(roomId).emit('message', { type: 'user', nickname, content });
   }
 }

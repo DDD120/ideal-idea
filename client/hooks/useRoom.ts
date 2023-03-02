@@ -3,19 +3,18 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useSocket } from "@/store/socket";
 
-export default function useRoom() {
+export default function useRoom(roomId: string) {
   const [users, setUsers] = useState<User[]>([]);
   const [me, setMe] = useState<User>({ id: "", nickname: "" });
   const socket = useSocket();
   const router = useRouter();
-  const { c: roomId } = router.query;
 
   useEffect(() => {
     socket.emit("join-room", roomId, (me: User) => {
       setMe(me);
     });
 
-    socket.on("full-room", async () => {
+    socket.on("full-room", () => {
       router.push("/");
       window.alert("정원 초과한 방입니다.");
     });
@@ -34,5 +33,6 @@ export default function useRoom() {
   return {
     users,
     me,
+    roomId,
   };
 }
