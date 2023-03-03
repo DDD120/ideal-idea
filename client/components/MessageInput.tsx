@@ -1,4 +1,4 @@
-import { MouseEvent, useRef } from "react";
+import { useRef } from "react";
 
 interface Props {
   onSetMessage: (message: string) => void;
@@ -7,8 +7,7 @@ interface Props {
 export default function MessageInput({ onSetMessage }: Props) {
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
+  const handleClick = () => {
     const message = inputRef.current?.value;
     if (!message) {
       return;

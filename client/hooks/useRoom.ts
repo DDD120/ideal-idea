@@ -3,13 +3,26 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useSocket } from "@/store/socket";
 
-export default function useRoom(roomId: string) {
+export default function useRoom() {
   const [users, setUsers] = useState<User[]>([]);
   const [me, setMe] = useState<User>({ id: "", nickname: "" });
   const socket = useSocket();
   const router = useRouter();
+  const roomId = router.query.c;
 
   useEffect(() => {
+    if (!router.isReady) {
+      return;
+    }
+    router.replace(
+      {
+        pathname: "/room",
+        query: {
+          c: roomId,
+        },
+      },
+      "/room"
+    );
     socket.emit("join-room", roomId, (me: User) => {
       setMe(me);
     });
@@ -28,7 +41,7 @@ export default function useRoom(roomId: string) {
       socket.off("full-room");
       socket.off("set-users");
     };
-  }, [socket]);
+  }, [socket, router.isReady]);
 
   return {
     users,

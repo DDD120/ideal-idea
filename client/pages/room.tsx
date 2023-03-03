@@ -2,15 +2,10 @@ import MessageInput from "@/components/MessageInput";
 import useChat from "@/hooks/useChat";
 import useRoom from "@/hooks/useRoom";
 import { useSocket } from "@/store/socket";
-import { GetServerSidePropsContext } from "next";
 
-interface Props {
-  roomId: string;
-}
-
-export default function Room({ roomId }: Props) {
+export default function Room() {
   const socket = useSocket();
-  const { users, me } = useRoom(roomId);
+  const { users, me, roomId } = useRoom();
   const { messages, setMessages } = useChat();
 
   const handleSetMessage = (content: string) => {
@@ -25,6 +20,10 @@ export default function Room({ roomId }: Props) {
     });
   };
 
+  const handleInviteClick = () => {
+    navigator.clipboard.writeText(`${window.location.href}?c=${roomId}`);
+  };
+
   return (
     <div>
       <h1>ROOM</h1>
@@ -35,6 +34,7 @@ export default function Room({ roomId }: Props) {
           <li key={user.id}>{user.nickname}</li>
         ))}
       </ul>
+      <button onClick={handleInviteClick}>초대</button>
       <h2>채팅창</h2>
       <ul>
         {messages.map((message, index) => (
@@ -47,11 +47,4 @@ export default function Room({ roomId }: Props) {
       <MessageInput onSetMessage={handleSetMessage} />
     </div>
   );
-}
-
-export async function getServerSideProps({ query }: GetServerSidePropsContext) {
-  const roomId = query.c;
-  return {
-    props: { roomId },
-  };
 }

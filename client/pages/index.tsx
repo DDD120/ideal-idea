@@ -5,12 +5,15 @@ import { v4 as uuid } from "uuid";
 export default function Home() {
   const router = useRouter();
   const handleStartClick = () => {
-    router.push({
-      pathname: "/room",
-      query: {
-        c: uuid(),
+    router.push(
+      {
+        pathname: "/room",
+        query: {
+          c: uuid(),
+        },
       },
-    });
+      "/room"
+    );
   };
 
   return (
