@@ -2,13 +2,14 @@ import { User } from "./../types/room";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useSocket } from "@/store/socket";
+import { useRoomId } from "@/store/room";
 
-export default function useRoom() {
+export default function useUsers() {
   const [users, setUsers] = useState<User[]>([]);
   const [me, setMe] = useState<User>({ id: "", nickname: "" });
   const socket = useSocket();
   const router = useRouter();
-  const roomId = router.query.c;
+  const roomId = useRoomId();
 
   useEffect(() => {
     if (!router.isReady) {
@@ -41,7 +42,7 @@ export default function useRoom() {
       socket.off("full-room");
       socket.off("set-users");
     };
-  }, [socket, router.isReady]);
+  }, [socket]);
 
   return {
     users,
