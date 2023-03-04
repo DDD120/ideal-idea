@@ -42,7 +42,7 @@ export default function useUsers() {
       socket.off("full-room");
       socket.off("set-users");
     };
-  }, [socket]);
+  }, [socket, router.isReady]);
 
   return {
     users,

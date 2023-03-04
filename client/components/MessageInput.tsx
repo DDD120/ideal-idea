@@ -1,6 +1,8 @@
 import { ChangeEvent, useState } from "react";
 import dynamic from "next/dynamic";
 import { EmojiClickData, EmojiStyle } from "emoji-picker-react";
+import Emoji from "@/assets/svg/emoji.svg";
+import Send from "@/assets/svg/send.svg";
 
 const EmojiPicker = dynamic(
   () => {
@@ -30,25 +32,43 @@ export default function MessageInput({ onSetMessage }: Props) {
   };
 
   const handleEmojiPickerClick = () => {
-    setIsShowEmojiPicker(true);
+    setIsShowEmojiPicker((prev) => !prev);
   };
 
   const handleEmojiClick = ({ emoji }: EmojiClickData) => {
     setContent((prev) => prev + emoji);
     setIsShowEmojiPicker(false);
   };
-
+  Send;
   return (
-    <div>
-      <input type="text" value={content} onChange={handleInputChange} />
-      <button onClick={handleEmojiPickerClick}>이모지</button>
+    <div className="flex">
+      <input
+        type="text"
+        value={content}
+        onChange={handleInputChange}
+        onKeyUp={(e) => e.key === "Enter" && handleSendClick()}
+        className="bg-navy-700 flex-1 p-2 outline-none"
+      />
+      <button
+        onClick={handleEmojiPickerClick}
+        className="bg-navy-700 p-3 hover:brightness-95"
+      >
+        <Emoji width="20" height="20" fill="white" />
+      </button>
       {isShowEmojiPicker && (
-        <EmojiPicker
-          onEmojiClick={handleEmojiClick}
-          emojiStyle={EmojiStyle.GOOGLE}
-        />
+        <div className="absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%]">
+          <EmojiPicker
+            onEmojiClick={handleEmojiClick}
+            emojiStyle={EmojiStyle.GOOGLE}
+          />
+        </div>
       )}
-      <button onClick={handleSendClick}>확인</button>
+      <button
+        onClick={handleSendClick}
+        className="bg-navy-700 p-3 hover:brightness-95"
+      >
+        <Send width="20" height="20" fill="white" />
+      </button>
     </div>
   );
 }

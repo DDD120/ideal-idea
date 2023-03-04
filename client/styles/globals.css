@@ -7,3 +7,28 @@
   padding: 0;
   margin: 0;
 }
+
+@font-face {
+  font-family: "NexonMaplestoryLight";
+  font-weight: 300;
+  font-style: normal;
+  src: url("https://cdn.jsdelivr.net/gh/webfontworld/NexonMaplestory/NexonMaplestoryLight.eot");
+  src: url("https://cdn.jsdelivr.net/gh/webfontworld/NexonMaplestory/NexonMaplestoryLight.eot?#iefix")
+      format("embedded-opentype"),
+    url("https://cdn.jsdelivr.net/gh/webfontworld/NexonMaplestory/NexonMaplestoryLight.woff2")
+      format("woff2"),
+    url("https://cdn.jsdelivr.net/gh/webfontworld/NexonMaplestory/NexonMaplestoryLight.woff")
+      format("woff"),
+    url("https://cdn.jsdelivr.net/gh/webfontworld/NexonMaplestory/NexonMaplestoryLight.ttf")
+      format("truetype");
+  font-display: swap;
+}
+
+*::-webkit-scrollbar {
+  width: 4px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #f76597;
+  border-radius: 8px;
+}

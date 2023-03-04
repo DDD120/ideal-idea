@@ -13,7 +13,7 @@ export function RoomProvider({ children }: Props) {
 
   useEffect(() => {
     if (router.isReady) {
-      if (!roomId) {
+      if (!router.query.c) {
         router.push("/");
       }
     }

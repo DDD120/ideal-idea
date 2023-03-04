@@ -6,7 +6,19 @@ module.exports = {
     "./components/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        pink: "#f76597",
+        navy: {
+          700: "#595B83",
+          800: "#333456",
+          900: "#060930",
+        },
+      },
+      fontFamily: {
+        "maple-light": ["NexonMaplestoryLight"],
+      },
+    },
   },
   plugins: [],
 };
