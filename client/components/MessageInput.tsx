@@ -47,13 +47,13 @@ export default function MessageInput({ onSetMessage }: Props) {
         value={content}
         onChange={handleInputChange}
         onKeyUp={(e) => e.key === "Enter" && handleSendClick()}
-        className="bg-navy-700 flex-1 p-2 outline-none"
+        className="bg-navy-700 flex-1 py-2 px-4 outline-none"
       />
       <button
         onClick={handleEmojiPickerClick}
-        className="bg-navy-700 p-3 hover:brightness-95"
+        className="bg-navy-700 w-12 flex justify-center items-center hover:brightness-95"
       >
-        <Emoji width="20" height="20" fill="white" />
+        <Emoji width="18" height="18" fill="white" />
       </button>
       {isShowEmojiPicker && (
         <div className="absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%]">
@@ -65,9 +65,9 @@ export default function MessageInput({ onSetMessage }: Props) {
       )}
       <button
         onClick={handleSendClick}
-        className="bg-navy-700 p-3 hover:brightness-95"
+        className="bg-navy-700 w-12 flex justify-center items-center hover:brightness-95"
       >
-        <Send width="20" height="20" fill="white" />
+        <Send width="18" height="18" fill="white" />
       </button>
     </div>
   );
