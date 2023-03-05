@@ -1,8 +1,25 @@
-import { useRoomId } from "@/store/room";
 import { useSocket } from "@/store/socket";
-import { useEffect } from "react";
+import { drawLine } from "@/utils/canvas";
+import { RefObject, useEffect } from "react";
 
-export default function useCanvas() {
-  const roomId = useRoomId();
+interface Props {
+  canvasRef: RefObject<HTMLCanvasElement>;
+}
+
+export default function useCanvas({ canvasRef }: Props) {
   const socket = useSocket();
+
+  useEffect(() => {
+    const ctx = canvasRef.current?.getContext("2d");
+    socket.on("draw-line", ({ currentPoint, prevPoint }) => {
+      if (!ctx) return;
+      drawLine({ ctx, currentPoint, prevPoint });
+    });
+
+    return () => {
+      socket.off("draw-line");
+    };
+  }, [canvasRef, socket]);
+
+  return;
 }

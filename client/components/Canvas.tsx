@@ -1,22 +1,25 @@
+import useCanvas from "@/hooks/useCanvas";
 import useDraw from "@/hooks/useDraw";
+import { useRoomId } from "@/store/room";
+import { useSocket } from "@/store/socket";
 import { Draw } from "@/types/canvas";
+import { drawLine } from "@/utils/canvas";
 import { useRef } from "react";
 
 export default function Canvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const roomId = useRoomId();
+  const socket = useSocket();
   const { onMouseDown } = useDraw({ onDraw: handleDraw, canvasRef });
+  useCanvas({ canvasRef });
 
-  function handleDraw({ prevPoint, currentPoint, ctx }: Draw) {
-    const { x: currX, y: currY } = currentPoint;
-
-    const startPoint = prevPoint ?? currentPoint;
-    ctx.beginPath();
-    ctx.lineWidth = 5;
-    ctx.strokeStyle = "#000";
-    ctx.lineCap = "round";
-    ctx.moveTo(startPoint.x, startPoint.y);
-    ctx.lineTo(currX, currY);
-    ctx.stroke();
+  function handleDraw({ ctx, currentPoint, prevPoint }: Draw) {
+    socket.emit("draw-line", {
+      prevPoint,
+      currentPoint,
+      roomId,
+    });
+    drawLine({ ctx, prevPoint, currentPoint });
   }
 
   return (
