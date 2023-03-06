@@ -123,4 +123,9 @@ export class RoomGateway implements OnGatewayConnection {
   ) {
     client.to(roomId).emit('draw-line', drawline);
   }
+
+  @SubscribeMessage('canvas-clear')
+  handleCanvasClear(@MessageBody() roomId: string) {
+    this.server.to(roomId).emit('canvas-clear');
+  }
 }

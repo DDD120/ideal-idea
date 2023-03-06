@@ -5,6 +5,7 @@ import { useSocket } from "@/store/socket";
 import { Draw } from "@/types/canvas";
 import { drawLine } from "@/utils/canvas";
 import { useRef } from "react";
+import Tools from "./Tools";
 
 export default function Canvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -24,7 +25,7 @@ export default function Canvas() {
 
   return (
     <section className="bg-navy-800 w-[1000px] h-[600px] flex justify-between">
-      <div></div>
+      <Tools />
       <canvas
         onMouseDown={onMouseDown}
         ref={canvasRef}

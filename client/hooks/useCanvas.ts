@@ -1,7 +1,7 @@
 import { useRoomId } from "@/store/room";
 import { useSocket } from "@/store/socket";
 import { DrawLine } from "@/types/canvas";
-import { drawLine } from "@/utils/canvas";
+import { clearCanvas, drawLine } from "@/utils/canvas";
 import { RefObject, useEffect } from "react";
 
 interface Props {
@@ -33,11 +33,13 @@ export default function useCanvas({ canvasRef }: Props) {
       if (!ctx) return;
       drawLine({ ctx, currentPoint, prevPoint });
     });
+    socket.on("canvas-clear", () => clearCanvas(canvasRef));
 
     return () => {
       socket.off("canvas-ready");
       socket.off("canvas-state");
       socket.off("draw-line");
+      socket.off("canvas-clear");
     };
   }, [canvasRef, roomId, socket]);
 
