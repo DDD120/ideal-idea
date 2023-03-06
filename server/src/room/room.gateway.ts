@@ -1,4 +1,3 @@
-import { User } from './../types/room';
 import {
   SubscribeMessage,
   WebSocketGateway,
@@ -7,7 +6,7 @@ import {
 } from '@nestjs/websockets';
 import { ConnectedSocket, MessageBody } from '@nestjs/websockets/decorators';
 import { Server, Socket } from 'socket.io';
-import { DrawLine } from './canvas.entity';
+import { User, DrawLine } from './room.entity';
 
 @WebSocketGateway({
   cors: {
@@ -99,6 +98,21 @@ export class RoomGateway implements OnGatewayConnection {
     @ConnectedSocket() client: Socket,
   ) {
     client.to(roomId).emit('message', { type: 'user', nickname, content });
+  }
+
+  @SubscribeMessage('canvas-ready')
+  handleCanvasReady(
+    @MessageBody() roomId: string,
+    @ConnectedSocket() client: Socket,
+  ) {
+    client.to(roomId).emit('canvas-ready');
+  }
+
+  @SubscribeMessage('canvas-state')
+  handleCanvasState(
+    @MessageBody() { roomId, canvas }: { roomId: string; canvas: string },
+  ) {
+    this.server.to(roomId).emit('canvas-state', canvas);
   }
 
   @SubscribeMessage('draw-line')

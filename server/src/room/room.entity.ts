@@ -8,3 +8,13 @@ export interface Message {
   nickname: string;
   content: string;
 }
+
+export interface DrawLine {
+  currentPoint: Point;
+  prevPoint: Point | null;
+}
+
+interface Point {
+  x: number;
+  y: number;
+}

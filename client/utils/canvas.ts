@@ -1,6 +1,6 @@
 import { Draw } from "@/types/canvas";
 
-export const drawLine = ({ prevPoint, currentPoint, ctx }: Draw) => {
+export const drawLine = ({ ctx, prevPoint, currentPoint }: Draw) => {
   const { x: currX, y: currY } = currentPoint;
 
   const startPoint = prevPoint ?? currentPoint;
