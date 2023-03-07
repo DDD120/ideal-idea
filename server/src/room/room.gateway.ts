@@ -6,7 +6,7 @@ import {
 } from '@nestjs/websockets';
 import { ConnectedSocket, MessageBody } from '@nestjs/websockets/decorators';
 import { Server, Socket } from 'socket.io';
-import { User, DrawLine } from './room.entity';
+import { User, Draw } from './room.entity';
 
 @WebSocketGateway({
   cors: {
@@ -118,10 +118,10 @@ export class RoomGateway implements OnGatewayConnection {
   @SubscribeMessage('draw-line')
   handleDrawLine(
     @MessageBody()
-    { roomId, ...drawline }: { roomId: string; drawLine: DrawLine },
+    { roomId, ...draw }: { roomId: string; draw: Draw },
     @ConnectedSocket() client: Socket,
   ) {
-    client.to(roomId).emit('draw-line', drawline);
+    client.to(roomId).emit('draw-line', draw);
   }
 
   @SubscribeMessage('canvas-clear')

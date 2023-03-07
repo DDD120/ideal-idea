@@ -1,13 +1,22 @@
 import { Draw } from "@/types/canvas";
 import { RefObject } from "react";
 
-export const drawLine = ({ ctx, prevPoint, currentPoint }: Draw) => {
+export const drawLine = ({
+  ctx,
+  prevPoint,
+  currentPoint,
+  tool,
+  color,
+  brushSize,
+}: Draw) => {
+  if (!ctx) return;
   const { x: currX, y: currY } = currentPoint;
+  const storkColor = tool === "pen" ? color : "#ffffff";
 
   const startPoint = prevPoint ?? currentPoint;
   ctx.beginPath();
-  ctx.lineWidth = 5;
-  ctx.strokeStyle = "#000";
+  ctx.lineWidth = brushSize;
+  ctx.strokeStyle = storkColor;
   ctx.lineCap = "round";
   ctx.moveTo(startPoint.x, startPoint.y);
   ctx.lineTo(currX, currY);

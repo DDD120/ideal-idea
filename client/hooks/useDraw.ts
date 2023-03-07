@@ -1,8 +1,8 @@
-import { Draw, Point } from "@/types/canvas";
+import { DrawLine, Point } from "@/types/canvas";
 import { RefObject, useEffect, useRef, useState } from "react";
 
 interface Props {
-  onDraw: (props: Draw) => void;
+  onDraw: (props: DrawLine) => void;
   canvasRef: RefObject<HTMLCanvasElement>;
 }
 

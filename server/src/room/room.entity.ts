@@ -9,9 +9,12 @@ export interface Message {
   content: string;
 }
 
-export interface DrawLine {
+export interface Draw {
   currentPoint: Point;
   prevPoint: Point | null;
+  tool: string;
+  color: string;
+  brushSize: number;
 }
 
 interface Point {

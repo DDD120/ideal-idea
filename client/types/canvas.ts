@@ -1,13 +1,26 @@
 export interface DrawLine {
   currentPoint: Point;
   prevPoint: Point | null;
+  ctx?: CanvasRenderingContext2D;
 }
 
 export interface Draw extends DrawLine {
-  ctx: CanvasRenderingContext2D;
+  tool: string;
+  color: string;
+  brushSize: number;
 }
 
 export interface Point {
   x: number;
   y: number;
+}
+
+export interface Tools {
+  tool: string;
+  color: string;
+  brushSize: number;
+}
+
+export interface ReturnTools extends Tools {
+  onToolsChange: (type: string, value: string) => void;
 }
