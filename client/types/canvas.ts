@@ -16,10 +16,12 @@ export interface Point {
 }
 
 export interface Tools {
-  tool: string;
+  tool: Tool;
   color: string;
   brushSize: number;
 }
+
+export type Tool = "pen" | "eraser";
 
 export interface ReturnTools extends Tools {
   onToolsChange: (type: string, value: string) => void;

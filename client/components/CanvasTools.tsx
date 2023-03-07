@@ -27,6 +27,7 @@ export default function CanvasTools({
           name="tools"
           value="pen"
           onChange={handleToolChange}
+          defaultChecked
         />
         <label htmlFor="pen">연필</label>
         <input
@@ -47,7 +48,7 @@ export default function CanvasTools({
       />
       <input
         type="color"
-        color={color}
+        value={color}
         onChange={(e) => onToolsChange("color", e.target.value)}
       />
       <button type="button" onClick={() => socket.emit("canvas-clear", roomId)}>
