@@ -2,13 +2,15 @@ import { useRoomId } from "@/store/room";
 import { useSocket } from "@/store/socket";
 import { ReturnTools } from "@/types/canvas";
 import { ChangeEvent } from "react";
+import Pen from "@/assets/svg/pen.svg";
+import Eraser from "@/assets/svg/eraser.svg";
 
 interface Props {
   tools: ReturnTools;
 }
 
 export default function CanvasTools({
-  tools: { color, brushSize, onToolsChange },
+  tools: { tool, color, brushSize, onToolsChange },
 }: Props) {
   const socket = useSocket();
   const roomId = useRoomId();
@@ -18,7 +20,7 @@ export default function CanvasTools({
   };
 
   return (
-    <div>
+    <div className="flex-1 p-3">
       <fieldset>
         <legend>도구</legend>
         <input
@@ -28,30 +30,59 @@ export default function CanvasTools({
           value="pen"
           onChange={handleToolChange}
           defaultChecked
+          className="hidden"
         />
-        <label htmlFor="pen">연필</label>
+        <label
+          htmlFor="pen"
+          className="cursor-pointer p-1 flex items-center gap-3 my-2"
+        >
+          <Pen
+            width="24"
+            height="24"
+            fill={tool === "pen" ? "#f76597" : "white"}
+          />
+          <p className={tool === "pen" ? "text-pink" : "white"}>펜</p>
+        </label>
         <input
           type="radio"
           id="eraser"
           name="tools"
           value="eraser"
           onChange={handleToolChange}
+          className="hidden"
         />
-        <label htmlFor="eraser">지우개</label>
+        <label
+          htmlFor="eraser"
+          className="cursor-pointer p-1 flex  items-center gap-3 my-2"
+        >
+          <Eraser
+            width="24"
+            height="24"
+            fill={tool === "eraser" ? "#f76597" : "white"}
+          />
+          <p className={tool === "eraser" ? "text-pink" : "white"}>지우개</p>
+        </label>
       </fieldset>
+      <h2 className="my-1">크기</h2>
       <input
         type="range"
         min={1}
         max={50}
         onChange={(e) => onToolsChange("brush", e.target.value)}
         value={brushSize}
+        className="bg-pink w-full"
       />
+      <h2 className="my-1">색상</h2>
       <input
         type="color"
         value={color}
         onChange={(e) => onToolsChange("color", e.target.value)}
       />
-      <button type="button" onClick={() => socket.emit("canvas-clear", roomId)}>
+      <button
+        className="w-full bg-navy-700 rounded-sm p-2 mt-2"
+        type="button"
+        onClick={() => socket.emit("canvas-clear", roomId)}
+      >
         전체 지우기
       </button>
     </div>
