@@ -1,4 +1,5 @@
 import { DrawLine, Point } from "@/types/canvas";
+import { computePoint } from "@/utils/canvas";
 import { RefObject, useEffect, useRef, useState } from "react";
 
 interface Props {
@@ -6,31 +7,26 @@ interface Props {
   canvasRef: RefObject<HTMLCanvasElement>;
 }
 
-export default function useDraw({ onDraw, canvasRef }: Props) {
+export default function useMouse({ onDraw, canvasRef }: Props) {
   const [isMouseDown, setIsMouseDown] = useState(false);
   const prevPoint = useRef<Point | null>(null);
 
-  const onMouseDown = () => setIsMouseDown(true);
-
   useEffect(() => {
+    const canvas = canvasRef.current;
+    const ctx = canvas?.getContext("2d");
+    if (!canvas || !ctx) return;
+
+    const handleMousedown = () => {
+      setIsMouseDown(true);
+    };
+
     const handleMousemove = (e: MouseEvent) => {
       if (!isMouseDown) return;
-      const currentPoint = computePointInCanvas(e);
-      const ctx = canvasRef.current?.getContext("2d");
-      if (!ctx || !currentPoint) return;
+      const currentPoint = computePoint(canvas, e);
+      if (!currentPoint) return;
 
       onDraw({ ctx, currentPoint, prevPoint: prevPoint.current });
       prevPoint.current = currentPoint;
-    };
-
-    const computePointInCanvas = (e: MouseEvent) => {
-      const canvas = canvasRef.current;
-      if (!canvas) return;
-
-      const rect = canvas.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      return { x, y };
     };
 
     const handleMouseup = () => {
@@ -38,16 +34,14 @@ export default function useDraw({ onDraw, canvasRef }: Props) {
       prevPoint.current = null;
     };
 
+    canvasRef.current?.addEventListener("mousedown", handleMousedown);
     canvasRef.current?.addEventListener("mousemove", handleMousemove);
     window.addEventListener("mouseup", handleMouseup);
 
     return () => {
+      canvasRef.current?.removeEventListener("mousedown", handleMousedown);
       canvasRef.current?.removeEventListener("mousemove", handleMousemove);
       window.removeEventListener("mouseup", handleMouseup);
     };
   }, [isMouseDown, onDraw]);
-
-  return {
-    onMouseDown,
-  };
 }

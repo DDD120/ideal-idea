@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { useSocket } from "@/store/socket";
 import { Message } from "@/types/room";
+import { useRoom } from "@/store/room";
 
 export default function useChat() {
   const [messages, setMessages] = useState<Message[]>([]);
-  const socket = useSocket();
+  const { socket } = useRoom();
 
   useEffect(() => {
     socket.on("message", (message: Message) => {

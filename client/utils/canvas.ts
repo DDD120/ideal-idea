@@ -1,7 +1,13 @@
 import { Draw } from "@/types/canvas";
-import { RefObject } from "react";
 
-export const drawLine = ({
+export const computePoint = (canvas: HTMLCanvasElement, e: MouseEvent) => {
+  const rect = canvas.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  const y = e.clientY - rect.top;
+  return { x, y };
+};
+
+export const drawCanvas = ({
   ctx,
   prevPoint,
   currentPoint,
@@ -23,12 +29,6 @@ export const drawLine = ({
   ctx.stroke();
 };
 
-export const clearCanvas = (canvasRef: RefObject<HTMLCanvasElement>) => {
-  const canvas = canvasRef.current;
-  if (!canvas) return;
-
-  const ctx = canvas.getContext("2d");
-  if (!ctx) return;
-
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+export const clearCanvas = (ctx: CanvasRenderingContext2D) => {
+  ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 };

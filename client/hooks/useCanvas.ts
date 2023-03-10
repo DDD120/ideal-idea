@@ -1,7 +1,6 @@
-import { useRoomId } from "@/store/room";
-import { useSocket } from "@/store/socket";
+import { useRoom } from "@/store/room";
 import { Draw } from "@/types/canvas";
-import { clearCanvas, drawLine } from "@/utils/canvas";
+import { clearCanvas, drawCanvas } from "@/utils/canvas";
 import { RefObject, useEffect } from "react";
 
 interface Props {
@@ -9,39 +8,38 @@ interface Props {
 }
 
 export default function useCanvas({ canvasRef }: Props) {
-  const socket = useSocket();
-  const roomId = useRoomId();
+  const { roomId, socket } = useRoom();
 
   useEffect(() => {
-    const ctx = canvasRef.current?.getContext("2d");
+    const canvas = canvasRef.current;
+    const ctx = canvas?.getContext("2d");
+    if (!canvas || !ctx) return;
+
     socket.emit("canvas-ready", roomId);
     socket.on("canvas-ready", () => {
-      if (!canvasRef.current?.toDataURL()) return;
+      if (!canvas.toDataURL()) return;
       socket.emit("canvas-state", {
         roomId,
-        canvas: canvasRef.current.toDataURL(),
+        canvas: canvas.toDataURL(),
       });
     });
     socket.on("canvas-state", (canvas: string) => {
       const img = new Image();
       img.src = canvas;
       img.onload = () => {
-        ctx?.drawImage(img, 0, 0);
+        ctx.drawImage(img, 0, 0);
       };
     });
-    socket.on("draw-line", (draw: Draw) => {
-      if (!ctx) return;
-      drawLine({ ctx, ...draw });
-    });
-    socket.on("canvas-clear", () => clearCanvas(canvasRef));
+    socket.on("canvas-draw", (draw: Draw) => drawCanvas({ ctx, ...draw }));
+    socket.on("canvas-clear", () => clearCanvas(ctx));
 
     return () => {
       socket.off("canvas-ready");
       socket.off("canvas-state");
-      socket.off("draw-line");
+      socket.off("canvas-draw");
       socket.off("canvas-clear");
     };
-  }, [canvasRef, roomId, socket, clearCanvas]);
+  }, [roomId, socket, clearCanvas]);
 
   return;
 }

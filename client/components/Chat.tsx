@@ -1,8 +1,7 @@
 import MessageInput from "@/components/MessageInput";
 import useChat from "@/hooks/useChat";
 import { useEffect, useRef } from "react";
-import { useSocket } from "@/store/socket";
-import { useRoomId } from "@/store/room";
+import { useRoom } from "@/store/room";
 
 interface Props {
   myNickname: string;
@@ -10,8 +9,7 @@ interface Props {
 
 export default function Chat({ myNickname }: Props) {
   const { messages, setMessages } = useChat();
-  const socket = useSocket();
-  const roomId = useRoomId();
+  const { roomId, socket } = useRoom();
   const scrollRef = useRef<HTMLLIElement>(null);
 
   const handleSetMessage = (content: string) => {

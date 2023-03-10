@@ -1,5 +1,5 @@
 import Invite from "@/assets/svg/invite.svg";
-import { useRoomId } from "@/store/room";
+import { useRoom } from "@/store/room";
 import { User } from "@/types/room";
 
 interface Props {
@@ -8,7 +8,7 @@ interface Props {
 }
 
 export default function Users({ users, myNickname }: Props) {
-  const roomId = useRoomId();
+  const { roomId } = useRoom();
 
   const handleInviteClick = () => {
     navigator.clipboard.writeText(`${window.location.href}?c=${roomId}`);

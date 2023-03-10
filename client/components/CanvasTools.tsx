@@ -1,5 +1,4 @@
-import { useRoomId } from "@/store/room";
-import { useSocket } from "@/store/socket";
+import { useRoom } from "@/store/room";
 import { ReturnTools } from "@/types/canvas";
 import { ChangeEvent } from "react";
 import Pen from "@/assets/svg/pen.svg";
@@ -12,8 +11,7 @@ interface Props {
 export default function CanvasTools({
   tools: { tool, color, brushSize, onToolsChange },
 }: Props) {
-  const socket = useSocket();
-  const roomId = useRoomId();
+  const { roomId, socket } = useRoom();
 
   const handleToolChange = (e: ChangeEvent<HTMLInputElement>) => {
     onToolsChange("tool", e.target.value);

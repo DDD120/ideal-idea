@@ -115,13 +115,13 @@ export class RoomGateway implements OnGatewayConnection {
     this.server.to(roomId).emit('canvas-state', canvas);
   }
 
-  @SubscribeMessage('draw-line')
+  @SubscribeMessage('canvas-draw')
   handleDrawLine(
     @MessageBody()
     { roomId, ...draw }: { roomId: string; draw: Draw },
     @ConnectedSocket() client: Socket,
   ) {
-    client.to(roomId).emit('draw-line', draw);
+    client.to(roomId).emit('canvas-draw', draw);
   }
 
   @SubscribeMessage('canvas-clear')
