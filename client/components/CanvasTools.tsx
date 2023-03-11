@@ -20,7 +20,22 @@ export default function CanvasTools({
   return (
     <div className="flex-1 p-3">
       <fieldset>
-        <legend>도구</legend>
+        <h2>도형</h2>
+        <input
+          type="radio"
+          id="rectangle"
+          name="tools"
+          value="rectangle"
+          onChange={handleToolChange}
+          className="hidden"
+        />
+        <label
+          htmlFor="rectangle"
+          className="cursor-pointer p-1 flex items-center gap-3 my-2"
+        >
+          <p className={tool === "rectangle" ? "text-pink" : "white"}>사각형</p>
+        </label>
+        <h2>도구</h2>
         <input
           type="radio"
           id="pen"

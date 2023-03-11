@@ -2,6 +2,7 @@ import { ReturnTools, Tool } from "@/types/canvas";
 import { useState } from "react";
 
 export default function useTools(): ReturnTools {
+  const [isShapeTool, setIsShapeTool] = useState(false);
   const [tool, setTool] = useState<Tool>("pen");
   const [color, setColor] = useState("#000000");
   const [brushSize, setBrushSize] = useState(5);
@@ -17,6 +18,7 @@ export default function useTools(): ReturnTools {
         break;
       case "tool":
         setTool(value as Tool);
+        value === "rectangle" ? setIsShapeTool(true) : setIsShapeTool(false);
         break;
     }
   };
@@ -25,6 +27,7 @@ export default function useTools(): ReturnTools {
     tool,
     color,
     brushSize,
+    isShapeTool,
     onToolsChange: handleChange,
   };
 }

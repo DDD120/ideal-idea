@@ -5,7 +5,7 @@ export interface DrawLine {
 }
 
 export interface Draw extends DrawLine {
-  tool: string;
+  tool: Tool;
   color: string;
   brushSize: number;
 }
@@ -21,8 +21,9 @@ export interface Tools {
   brushSize: number;
 }
 
-export type Tool = "pen" | "eraser";
+export type Tool = "pen" | "eraser" | "rectangle";
 
 export interface ReturnTools extends Tools {
+  isShapeTool: boolean;
   onToolsChange: (type: string, value: string) => void;
 }

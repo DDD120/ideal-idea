@@ -1,6 +1,6 @@
 import { useRoom } from "@/store/room";
 import { Draw } from "@/types/canvas";
-import { clearCanvas, drawCanvas } from "@/utils/canvas";
+import { clearCanvas, drawLine } from "@/utils/canvas";
 import { RefObject, useEffect } from "react";
 
 interface Props {
@@ -30,7 +30,8 @@ export default function useCanvas({ canvasRef }: Props) {
         ctx.drawImage(img, 0, 0);
       };
     });
-    socket.on("canvas-draw", (draw: Draw) => drawCanvas({ ctx, ...draw }));
+    socket.on("canvas-draw", (draw: Draw) => drawLine({ ctx, ...draw }));
+
     socket.on("canvas-clear", () => clearCanvas(ctx));
 
     return () => {

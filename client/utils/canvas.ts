@@ -7,7 +7,7 @@ export const computePoint = (canvas: HTMLCanvasElement, e: MouseEvent) => {
   return { x, y };
 };
 
-export const drawCanvas = ({
+export const drawLine = ({
   ctx,
   prevPoint,
   currentPoint,
@@ -16,7 +16,6 @@ export const drawCanvas = ({
   brushSize,
 }: Draw) => {
   if (!ctx) return;
-  const { x: currX, y: currY } = currentPoint;
   const storkColor = tool === "pen" ? color : "#ffffff";
 
   const startPoint = prevPoint ?? currentPoint;
@@ -25,8 +24,28 @@ export const drawCanvas = ({
   ctx.strokeStyle = storkColor;
   ctx.lineCap = "round";
   ctx.moveTo(startPoint.x, startPoint.y);
-  ctx.lineTo(currX, currY);
+  ctx.lineTo(currentPoint.x, currentPoint.y);
   ctx.stroke();
+};
+
+export const drawShape = ({
+  ctx,
+  prevPoint,
+  currentPoint,
+  tool,
+  color,
+  brushSize,
+}) => {
+  if (!ctx) return;
+  ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+  ctx.lineWidth = brushSize;
+  ctx.strokeStyle = color;
+  ctx.strokeRect(
+    prevPoint.x,
+    prevPoint.y,
+    currentPoint.x - prevPoint.x,
+    currentPoint.y - prevPoint.y
+  );
 };
 
 export const clearCanvas = (ctx: CanvasRenderingContext2D) => {
