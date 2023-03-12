@@ -40,6 +40,7 @@ export const drawShape = ({
   ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
   ctx.lineWidth = brushSize;
   ctx.strokeStyle = color;
+  ctx.lineCap = "round";
 
   switch (tool as Shape) {
     case "rectangle":
@@ -58,6 +59,13 @@ export const drawShape = ({
       );
       ctx.arc(prevPoint.x, prevPoint.y, radius, 0, 2 * Math.PI);
       ctx.stroke();
+      break;
+    case "straight":
+      ctx.beginPath();
+      ctx.moveTo(prevPoint.x, prevPoint.y);
+      ctx.lineTo(currentPoint.x, currentPoint.y);
+      ctx.stroke();
+      break;
   }
 };
 

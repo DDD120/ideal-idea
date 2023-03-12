@@ -20,9 +20,9 @@ export interface Tools {
   brushSize: number;
 }
 
-export type Tool = "pen" | "eraser" | "rectangle" | "circle";
+export type Tool = "pen" | "eraser" | "rectangle" | "circle" | "straight";
 
-export type Shape = Extract<Tool, "rectangle" | "circle">;
+export type Shape = Extract<Tool, "rectangle" | "circle" | "straight">;
 
 export interface ReturnTools extends Tools {
   isShapeTool: boolean;

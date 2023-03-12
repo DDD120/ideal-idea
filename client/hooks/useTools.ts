@@ -1,7 +1,7 @@
 import { ReturnTools, Shape, Tool } from "@/types/canvas";
 import { useState } from "react";
 
-const shape: Shape[] = ["rectangle", "circle"];
+const shape: Shape[] = ["rectangle", "circle", "straight"];
 
 export default function useTools(): ReturnTools {
   const [isShapeTool, setIsShapeTool] = useState(false);

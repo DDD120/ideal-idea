@@ -21,6 +21,7 @@ export default function CanvasTools({
     <div className="flex-1 p-3">
       <fieldset>
         <h2>도형</h2>
+
         <input
           type="radio"
           id="rectangle"
@@ -48,6 +49,20 @@ export default function CanvasTools({
           className="cursor-pointer p-1 flex items-center gap-3 my-2"
         >
           <p className={tool === "circle" ? "text-pink" : "white"}>원</p>
+        </label>
+        <input
+          type="radio"
+          id="straight"
+          name="tools"
+          value="straight"
+          onChange={handleToolChange}
+          className="hidden"
+        />
+        <label
+          htmlFor="straight"
+          className="cursor-pointer p-1 flex items-center gap-3 my-2"
+        >
+          <p className={tool === "straight" ? "text-pink" : "white"}>직선</p>
         </label>
         <h2>도구</h2>
         <input
