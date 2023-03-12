@@ -1,4 +1,4 @@
-import { Draw } from "@/types/canvas";
+import { Draw, Shape } from "@/types/canvas";
 
 export const computePoint = (canvas: HTMLCanvasElement, e: MouseEvent) => {
   const rect = canvas.getBoundingClientRect();
@@ -35,17 +35,30 @@ export const drawShape = ({
   tool,
   color,
   brushSize,
-}) => {
-  if (!ctx) return;
+}: Draw) => {
+  if (!ctx || !prevPoint) return;
   ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
   ctx.lineWidth = brushSize;
   ctx.strokeStyle = color;
-  ctx.strokeRect(
-    prevPoint.x,
-    prevPoint.y,
-    currentPoint.x - prevPoint.x,
-    currentPoint.y - prevPoint.y
-  );
+
+  switch (tool as Shape) {
+    case "rectangle":
+      ctx.strokeRect(
+        prevPoint.x,
+        prevPoint.y,
+        currentPoint.x - prevPoint.x,
+        currentPoint.y - prevPoint.y
+      );
+      break;
+    case "circle":
+      ctx.beginPath();
+      const radius = Math.sqrt(
+        Math.pow(prevPoint.x - currentPoint.x, 2) +
+          Math.pow(prevPoint.y - currentPoint.y, 2)
+      );
+      ctx.arc(prevPoint.x, prevPoint.y, radius, 0, 2 * Math.PI);
+      ctx.stroke();
+  }
 };
 
 export const clearCanvas = (ctx: CanvasRenderingContext2D) => {

@@ -1,14 +1,13 @@
-export interface DrawLine {
+export interface Draw {
+  tool: Tool;
+  color: string;
+  brushSize: number;
   currentPoint: Point;
   prevPoint: Point | null;
   ctx?: CanvasRenderingContext2D;
 }
 
-export interface Draw extends DrawLine {
-  tool: Tool;
-  color: string;
-  brushSize: number;
-}
+export type DrawLine = Pick<Draw, "currentPoint" | "prevPoint" | "ctx">;
 
 export interface Point {
   x: number;
@@ -21,7 +20,9 @@ export interface Tools {
   brushSize: number;
 }
 
-export type Tool = "pen" | "eraser" | "rectangle";
+export type Tool = "pen" | "eraser" | "rectangle" | "circle";
+
+export type Shape = Extract<Tool, "rectangle" | "circle">;
 
 export interface ReturnTools extends Tools {
   isShapeTool: boolean;

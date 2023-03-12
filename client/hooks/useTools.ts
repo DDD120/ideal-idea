@@ -1,5 +1,7 @@
-import { ReturnTools, Tool } from "@/types/canvas";
+import { ReturnTools, Shape, Tool } from "@/types/canvas";
 import { useState } from "react";
+
+const shape: Shape[] = ["rectangle", "circle"];
 
 export default function useTools(): ReturnTools {
   const [isShapeTool, setIsShapeTool] = useState(false);
@@ -18,7 +20,9 @@ export default function useTools(): ReturnTools {
         break;
       case "tool":
         setTool(value as Tool);
-        value === "rectangle" ? setIsShapeTool(true) : setIsShapeTool(false);
+        shape.some((item) => item === value)
+          ? setIsShapeTool(true)
+          : setIsShapeTool(false);
         break;
     }
   };

@@ -35,6 +35,20 @@ export default function CanvasTools({
         >
           <p className={tool === "rectangle" ? "text-pink" : "white"}>사각형</p>
         </label>
+        <input
+          type="radio"
+          id="circle"
+          name="tools"
+          value="circle"
+          onChange={handleToolChange}
+          className="hidden"
+        />
+        <label
+          htmlFor="circle"
+          className="cursor-pointer p-1 flex items-center gap-3 my-2"
+        >
+          <p className={tool === "circle" ? "text-pink" : "white"}>원</p>
+        </label>
         <h2>도구</h2>
         <input
           type="radio"
