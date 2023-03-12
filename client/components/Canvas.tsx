@@ -19,7 +19,7 @@ export default function Canvas() {
   });
   useCanvas({ canvasRef });
   const tools = useTools();
-  const { tool, color, brushSize, isShapeTool } = tools;
+  const { tool, color, brushSize, isShapeTool, isShapeFill } = tools;
 
   function handleDrawLine({ ctx, currentPoint, prevPoint }: DrawLine) {
     if (!tool) return;
@@ -42,7 +42,15 @@ export default function Canvas() {
   }
 
   function handleDrawShape({ ctx, currentPoint, prevPoint }: DrawLine) {
-    drawShape({ ctx, currentPoint, prevPoint, tool, color, brushSize });
+    drawShape({
+      ctx,
+      currentPoint,
+      prevPoint,
+      tool,
+      color,
+      brushSize,
+      isShapeFill,
+    });
   }
 
   return (

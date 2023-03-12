@@ -1,6 +1,9 @@
 import { useRoom } from "@/store/room";
 import { ReturnTools } from "@/types/canvas";
 import { ChangeEvent } from "react";
+import Square from "@/assets/svg/square.svg";
+import Circle from "@/assets/svg/circle.svg";
+import Straight from "@/assets/svg/straight.svg";
 import Pen from "@/assets/svg/pen.svg";
 import Eraser from "@/assets/svg/eraser.svg";
 
@@ -9,12 +12,19 @@ interface Props {
 }
 
 export default function CanvasTools({
-  tools: { tool, color, brushSize, onToolsChange },
+  tools: {
+    tool,
+    color,
+    brushSize,
+    isShapeFill,
+    onShapeFillChange,
+    onToolChange,
+  },
 }: Props) {
   const { roomId, socket } = useRoom();
 
   const handleToolChange = (e: ChangeEvent<HTMLInputElement>) => {
-    onToolsChange("tool", e.target.value);
+    onToolChange("tool", e.target.value);
   };
 
   return (
@@ -24,17 +34,22 @@ export default function CanvasTools({
 
         <input
           type="radio"
-          id="rectangle"
+          id="square"
           name="tools"
-          value="rectangle"
+          value="square"
           onChange={handleToolChange}
           className="hidden"
         />
         <label
-          htmlFor="rectangle"
+          htmlFor="square"
           className="cursor-pointer p-1 flex items-center gap-3 my-2"
         >
-          <p className={tool === "rectangle" ? "text-pink" : "white"}>사각형</p>
+          <Square
+            width="24"
+            height="24"
+            fill={tool === "square" ? "#f76597" : "white"}
+          />
+          <p className={tool === "square" ? "text-pink" : "white"}>사각형</p>
         </label>
         <input
           type="radio"
@@ -48,6 +63,11 @@ export default function CanvasTools({
           htmlFor="circle"
           className="cursor-pointer p-1 flex items-center gap-3 my-2"
         >
+          <Circle
+            width="24"
+            height="24"
+            fill={tool === "circle" ? "#f76597" : "white"}
+          />
           <p className={tool === "circle" ? "text-pink" : "white"}>원</p>
         </label>
         <input
@@ -62,7 +82,24 @@ export default function CanvasTools({
           htmlFor="straight"
           className="cursor-pointer p-1 flex items-center gap-3 my-2"
         >
+          <Straight
+            width="24"
+            height="24"
+            fill={tool === "straight" ? "#f76597" : "white"}
+            transform="rotate(45)"
+          />
           <p className={tool === "straight" ? "text-pink" : "white"}>직선</p>
+        </label>
+        <input
+          type="checkbox"
+          id="shape-fill"
+          value="shape-fill"
+          defaultChecked={isShapeFill}
+          onChange={(e) => onShapeFillChange(e.target.checked)}
+          className="cursor-pointer accent-pink ml-2"
+        />
+        <label htmlFor="shape-fill" className="ml-2 cursor-pointer">
+          채우기
         </label>
         <h2>도구</h2>
         <input
@@ -110,7 +147,7 @@ export default function CanvasTools({
         type="range"
         min={1}
         max={50}
-        onChange={(e) => onToolsChange("brush", e.target.value)}
+        onChange={(e) => onToolChange("brush", e.target.value)}
         value={brushSize}
         className="bg-pink w-full"
       />
@@ -118,7 +155,7 @@ export default function CanvasTools({
       <input
         type="color"
         value={color}
-        onChange={(e) => onToolsChange("color", e.target.value)}
+        onChange={(e) => onToolChange("color", e.target.value)}
       />
       <button
         className="w-full bg-navy-700 rounded-sm p-2 mt-2"

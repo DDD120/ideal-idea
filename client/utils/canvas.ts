@@ -35,6 +35,7 @@ export const drawShape = ({
   tool,
   color,
   brushSize,
+  isShapeFill,
 }: Draw) => {
   if (!ctx || !prevPoint) return;
   ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
@@ -43,7 +44,16 @@ export const drawShape = ({
   ctx.lineCap = "round";
 
   switch (tool as Shape) {
-    case "rectangle":
+    case "square":
+      if (isShapeFill) {
+        ctx.fillRect(
+          prevPoint.x,
+          prevPoint.y,
+          currentPoint.x - prevPoint.x,
+          currentPoint.y - prevPoint.y
+        );
+        return;
+      }
       ctx.strokeRect(
         prevPoint.x,
         prevPoint.y,
@@ -58,7 +68,7 @@ export const drawShape = ({
           Math.pow(prevPoint.y - currentPoint.y, 2)
       );
       ctx.arc(prevPoint.x, prevPoint.y, radius, 0, 2 * Math.PI);
-      ctx.stroke();
+      isShapeFill ? ctx.fill() : ctx.stroke();
       break;
     case "straight":
       ctx.beginPath();

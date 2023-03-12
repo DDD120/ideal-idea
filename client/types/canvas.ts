@@ -4,6 +4,7 @@ export interface Draw {
   brushSize: number;
   currentPoint: Point;
   prevPoint: Point | null;
+  isShapeFill?: boolean;
   ctx?: CanvasRenderingContext2D;
 }
 
@@ -20,11 +21,13 @@ export interface Tools {
   brushSize: number;
 }
 
-export type Tool = "pen" | "eraser" | "rectangle" | "circle" | "straight";
+export type Tool = "pen" | "eraser" | "square" | "circle" | "straight";
 
-export type Shape = Extract<Tool, "rectangle" | "circle" | "straight">;
+export type Shape = Extract<Tool, "square" | "circle" | "straight">;
 
 export interface ReturnTools extends Tools {
   isShapeTool: boolean;
-  onToolsChange: (type: string, value: string) => void;
+  isShapeFill: boolean;
+  onShapeFillChange: (isChecked: boolean) => void;
+  onToolChange: (type: string, value: string) => void;
 }
