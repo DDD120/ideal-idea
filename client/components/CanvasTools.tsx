@@ -28,7 +28,7 @@ export default function CanvasTools({
   };
 
   return (
-    <div className="flex-1 p-3">
+    <div className="w-[200px] p-3">
       <fieldset>
         <h2>도형</h2>
 

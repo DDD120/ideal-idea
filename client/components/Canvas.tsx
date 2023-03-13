@@ -54,7 +54,7 @@ export default function Canvas() {
   }
 
   return (
-    <section className="bg-navy-800 w-[1000px] h-[600px] flex justify-between">
+    <section className="bg-navy-800 h-[600px] flex">
       <CanvasTools tools={tools} />
       <div className="relative w-[800px] bg-white">
         <canvas
