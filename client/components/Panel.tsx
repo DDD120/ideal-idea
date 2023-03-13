@@ -6,7 +6,7 @@ export default function Panel() {
   const { users, me } = useUsers();
 
   return (
-    <section className="bg-navy-800 w-72 h-[600px] rounded-sm overflow-hidden flex flex-col justify-between">
+    <section className="bg-navy-800 w-72 h-[600px] rounded-sm flex flex-col justify-between">
       <h1 className="text-white p-3">ideal idea</h1>
       <Users users={users} myNickname={me.nickname} />
       <Chat myNickname={me.nickname} />
