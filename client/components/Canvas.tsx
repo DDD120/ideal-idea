@@ -22,7 +22,6 @@ export default function Canvas() {
   const { tool, color, brushSize, isShapeTool, isShapeFill } = tools;
 
   function handleDrawLine({ ctx, currentPoint, prevPoint }: DrawLine) {
-    if (!tool) return;
     socket.emit("canvas-draw", {
       prevPoint,
       currentPoint,
@@ -55,13 +54,13 @@ export default function Canvas() {
 
   return (
     <section className="bg-navy-800 h-[600px] flex">
-      <CanvasTools tools={tools} />
+      <CanvasTools tools={tools} canvasRef={canvasRef} />
       <div className="relative w-[800px] bg-white">
         <canvas
           ref={canvasTempRef}
           width={800}
           height={600}
-          className={`absolute ${isShapeTool ? "z-10" : undefined}`}
+          className={`absolute ${isShapeTool ? "z-10" : ""}`}
         />
         <canvas ref={canvasRef} width={800} height={600} className="absolute" />
       </div>

@@ -1,14 +1,16 @@
 import { useRoom } from "@/store/room";
 import { ReturnTools } from "@/types/canvas";
-import { ChangeEvent } from "react";
+import { ChangeEvent, RefObject, useState } from "react";
 import Square from "@/assets/svg/square.svg";
 import Circle from "@/assets/svg/circle.svg";
 import Straight from "@/assets/svg/straight.svg";
 import Pen from "@/assets/svg/pen.svg";
 import Eraser from "@/assets/svg/eraser.svg";
+import ImageDownload from "./ImageDownload";
 
 interface Props {
   tools: ReturnTools;
+  canvasRef: RefObject<HTMLCanvasElement>;
 }
 
 export default function CanvasTools({
@@ -20,11 +22,17 @@ export default function CanvasTools({
     onShapeFillChange,
     onToolChange,
   },
+  canvasRef,
 }: Props) {
+  const [isShowDownload, setIsShowDownload] = useState(false);
   const { roomId, socket } = useRoom();
 
   const handleToolChange = (e: ChangeEvent<HTMLInputElement>) => {
     onToolChange("tool", e.target.value);
+  };
+
+  const handleDownloadClose = () => {
+    setIsShowDownload(false);
   };
 
   return (
@@ -160,10 +168,23 @@ export default function CanvasTools({
       <button
         className="w-full bg-navy-700 rounded-sm p-2 mt-2"
         type="button"
+        onClick={() => setIsShowDownload(true)}
+      >
+        이미지 저장
+      </button>
+      <button
+        className="w-full bg-navy-700 rounded-sm p-2 mt-2"
+        type="button"
         onClick={() => socket.emit("canvas-clear", roomId)}
       >
         전체 지우기
       </button>
+      <ImageDownload
+        isOpen={isShowDownload}
+        onRequestClose={handleDownloadClose}
+        onClose={handleDownloadClose}
+        canvasURL={canvasRef.current?.toDataURL()}
+      />
     </div>
   );
 }
