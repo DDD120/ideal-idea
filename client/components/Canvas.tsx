@@ -55,7 +55,7 @@ export default function Canvas() {
   return (
     <section className="bg-navy-800 h-[600px] flex">
       <CanvasTools tools={tools} canvasRef={canvasRef} />
-      <div className="relative w-[800px] bg-white">
+      <div className="relative w-[800px] bg-white cursor-canvas">
         <canvas
           ref={canvasTempRef}
           width={800}
