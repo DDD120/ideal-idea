@@ -29,7 +29,7 @@ export default function Chat({ myNickname }: Props) {
   }, [messages]);
 
   return (
-    <div className="flex-1">
+    <div className="flex-1 grow-0">
       <ul className="h-[320px] overflow-y-scroll p-3">
         {messages.map((message, index) => (
           <li key={index}>

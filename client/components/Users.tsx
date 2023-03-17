@@ -17,20 +17,16 @@ export default function Users({ users, myNickname }: Props) {
   return (
     <div className="p-3">
       <h2 className="text-lg">현재 인원 ({users.length}/4)</h2>
-      <ul className="flex gap-2 my-4">
+      <ul className="flex items-center gap-2 my-4 h-[68px]">
         {users.map((user) => (
-          <div key={user.id} className="flex flex-col items-center gap-1">
+          <li key={user.id} className="flex flex-col items-center gap-1">
             <div className="w-10 h-10 bg-white rounded-full"></div>
-            <li>
-              <h3
-                className={
-                  user.nickname === myNickname ? "text-pink" : undefined
-                }
-              >
-                {user.nickname}
-              </h3>
-            </li>
-          </div>
+            <h3
+              className={user.nickname === myNickname ? "text-pink" : undefined}
+            >
+              {user.nickname}
+            </h3>
+          </li>
         ))}
       </ul>
       <button
