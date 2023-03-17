@@ -57,7 +57,9 @@ export default function CanvasTools({
             height="24"
             fill={tool === "square" ? "#f76597" : "white"}
           />
-          <p className={tool === "square" ? "text-pink" : "white"}>사각형</p>
+          <p className={tool === "square" ? "text-pink" : "text-white"}>
+            사각형
+          </p>
         </label>
         <input
           type="radio"
@@ -76,7 +78,7 @@ export default function CanvasTools({
             height="24"
             fill={tool === "circle" ? "#f76597" : "white"}
           />
-          <p className={tool === "circle" ? "text-pink" : "white"}>원</p>
+          <p className={tool === "circle" ? "text-pink" : "text-white"}>원</p>
         </label>
         <input
           type="radio"
@@ -96,7 +98,9 @@ export default function CanvasTools({
             fill={tool === "straight" ? "#f76597" : "white"}
             transform="rotate(45)"
           />
-          <p className={tool === "straight" ? "text-pink" : "white"}>직선</p>
+          <p className={tool === "straight" ? "text-pink" : "text-white"}>
+            직선
+          </p>
         </label>
         <input
           type="checkbox"
@@ -128,7 +132,7 @@ export default function CanvasTools({
             height="24"
             fill={tool === "pen" ? "#f76597" : "white"}
           />
-          <p className={tool === "pen" ? "text-pink" : "white"}>펜</p>
+          <p className={tool === "pen" ? "text-pink" : "text-white"}>펜</p>
         </label>
         <input
           type="radio"
@@ -147,7 +151,9 @@ export default function CanvasTools({
             height="24"
             fill={tool === "eraser" ? "#f76597" : "white"}
           />
-          <p className={tool === "eraser" ? "text-pink" : "white"}>지우개</p>
+          <p className={tool === "eraser" ? "text-pink" : "text-white"}>
+            지우개
+          </p>
         </label>
       </fieldset>
       <h2 className="my-1">크기</h2>
@@ -166,14 +172,14 @@ export default function CanvasTools({
         onChange={(e) => onToolChange("color", e.target.value)}
       />
       <button
-        className="w-full bg-navy-700 rounded-sm p-2 mt-2"
+        className="w-full bg-navy-700 rounded-sm p-2 mt-2 hover:brightness-95"
         type="button"
         onClick={() => setIsShowDownload(true)}
       >
         이미지 저장
       </button>
       <button
-        className="w-full bg-navy-700 rounded-sm p-2 mt-2"
+        className="w-full bg-navy-700 rounded-sm p-2 mt-2 hover:brightness-95"
         type="button"
         onClick={() => socket.emit("canvas-clear", roomId)}
       >
