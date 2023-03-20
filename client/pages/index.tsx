@@ -3,9 +3,20 @@ import { Canvas } from "@react-three/fiber";
 import { Html, OrbitControls, Stars } from "@react-three/drei";
 import FloatText3D from "@/components/FloatText3D";
 import { v4 as uuid } from "uuid";
-import Link from "next/link";
+import { useRouter } from "next/router";
 
 export default function Home() {
+  const router = useRouter();
+
+  const handleStartClick = () => {
+    router.push(
+      {
+        pathname: "/room",
+        query: { c: uuid() },
+      },
+      "/room"
+    );
+  };
   return (
     <>
       <Head>
@@ -20,25 +31,9 @@ export default function Home() {
           <OrbitControls maxDistance={10} />
           <hemisphereLight groundColor="#ff4e8c" color="#34319c" />
           <ambientLight color="#ff4e8c" intensity={0.1} />
-          <FloatText3D position={[-4, 0, 0]}>i</FloatText3D>
-          <FloatText3D position={[-3.5, 0, 0]}>d</FloatText3D>
-          <FloatText3D position={[-2.5, 0, 0]}>e</FloatText3D>
-          <FloatText3D position={[-1.5, 0, 0]}>a</FloatText3D>
-          <FloatText3D position={[-0.5, 0, 0]}>l</FloatText3D>
-          <FloatText3D position={[1, 0, 0]}>i</FloatText3D>
-          <FloatText3D position={[1.5, 0, 0]}>d</FloatText3D>
-          <FloatText3D position={[2.5, 0, 0]}>e</FloatText3D>
-          <FloatText3D position={[3.5, 0, 0]}>a</FloatText3D>
+          <FloatText3D />
           <Html position={[0, -1, 0]} transform>
-            <Link
-              href={{
-                pathname: "/room",
-                query: { c: uuid() },
-              }}
-              as="/room"
-            >
-              시작하기
-            </Link>
+            <button onClick={handleStartClick}>시작하기</button>
           </Html>
         </Canvas>
       </main>
