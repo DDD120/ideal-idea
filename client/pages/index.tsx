@@ -4,6 +4,7 @@ import { Html, OrbitControls, Stars } from "@react-three/drei";
 import FloatText3D from "@/components/FloatText3D";
 import { v4 as uuid } from "uuid";
 import { useRouter } from "next/router";
+import Camera from "@/components/Camera";
 
 export default function Home() {
   const router = useRouter();
@@ -27,8 +28,9 @@ export default function Home() {
       </Head>
       <main className="w-screen h-screen">
         <Canvas>
+          <Camera />
           <Stars radius={100} count={500} fade={true} />
-          <OrbitControls maxDistance={10} />
+          <OrbitControls maxDistance={15} enableDamping={true} />
           <hemisphereLight groundColor="#ff4e8c" color="#34319c" />
           <ambientLight color="#ff4e8c" intensity={0.1} />
           <FloatText3D />
