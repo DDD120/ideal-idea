@@ -75,3 +75,9 @@ input[type="color"]::-webkit-color-swatch {
   border-radius: 50%;
   border: none;
 }
+
+@layer utilities {
+  .rendering-pixelated {
+    image-rendering: pixelated;
+  }
+}

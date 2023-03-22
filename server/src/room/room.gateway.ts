@@ -97,7 +97,11 @@ export class RoomGateway implements OnGatewayConnection {
     }: { roomId: string; content: string; nickname: string },
     @ConnectedSocket() client: Socket,
   ) {
-    client.to(roomId).emit('message', { type: 'user', nickname, content });
+    client.to(roomId).emit('message', {
+      type: 'user',
+      nickname,
+      content,
+    });
   }
 
   @SubscribeMessage('canvas-ready')

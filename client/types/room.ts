@@ -1,10 +1,12 @@
 export interface User {
   id: string;
-  nickname: string;
+  nickname: Nickname;
 }
 
 export interface Message {
   type: "user" | "notice";
-  nickname?: string;
+  nickname?: Nickname;
   content: string;
 }
+
+export type Nickname = "토끼" | "고양이" | "강아지" | "여우";
