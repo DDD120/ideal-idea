@@ -1,8 +1,8 @@
 import { ChangeEvent, useState } from "react";
 import dynamic from "next/dynamic";
 import { EmojiClickData, EmojiStyle } from "emoji-picker-react";
-import Emoji from "@/assets/svg/emoji.svg";
-import Send from "@/assets/svg/send.svg";
+import Emoji from "@/public/svg/emoji.svg";
+import Send from "@/public/svg/send.svg";
 
 const EmojiPicker = dynamic(
   () => {

@@ -4,7 +4,6 @@ module.exports = {
     "./app/**/*.{js,ts,jsx,tsx}",
     "./pages/**/*.{js,ts,jsx,tsx}",
     "./components/**/*.{js,ts,jsx,tsx}",
-    "./assets/**/*.{js,ts,jsx,tsx, cursor}",
   ],
   theme: {
     extend: {
@@ -20,7 +19,7 @@ module.exports = {
         "maple-light": ["NexonMaplestoryLight"],
       },
       cursor: {
-        canvas: "url(../assets/canvas.cur) 8 8, pointer",
+        canvas: "url(/canvas.cur) 8 8, pointer",
       },
     },
   },

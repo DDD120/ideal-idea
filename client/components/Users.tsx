@@ -1,4 +1,4 @@
-import Invite from "@/assets/svg/invite.svg";
+import Invite from "@/public/svg/invite.svg";
 import { useRoom } from "@/store/room";
 import { User } from "@/types/room";
 

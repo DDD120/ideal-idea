@@ -1,5 +1,5 @@
 import { Float, Text3D } from "@react-three/drei";
-import maplestory from "@/assets/Maplestory_Bold.json";
+import maplestory from "@/public/Maplestory_Bold.json";
 import { Vector3 } from "@react-three/fiber";
 
 interface Props {

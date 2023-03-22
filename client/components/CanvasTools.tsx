@@ -1,11 +1,11 @@
 import { useRoom } from "@/store/room";
 import { ReturnTools } from "@/types/canvas";
 import { ChangeEvent, RefObject, useState } from "react";
-import Square from "@/assets/svg/square.svg";
-import Circle from "@/assets/svg/circle.svg";
-import Straight from "@/assets/svg/straight.svg";
-import Pen from "@/assets/svg/pen.svg";
-import Eraser from "@/assets/svg/eraser.svg";
+import Square from "@/public/svg/square.svg";
+import Circle from "@/public/svg/circle.svg";
+import Straight from "@/public/svg/straight.svg";
+import Pen from "@/public/svg/pen.svg";
+import Eraser from "@/public/svg/eraser.svg";
 import ImageDownload from "./ImageDownload";
 
 interface Props {
