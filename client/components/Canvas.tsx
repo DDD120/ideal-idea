@@ -9,27 +9,32 @@ import CanvasTools from "./CanvasTools";
 
 export default function Canvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const canvasTempRef = useRef<HTMLCanvasElement>(null);
+  const canvasShapeRef = useRef<HTMLCanvasElement>(null);
+  const canvasMarkerRef = useRef<HTMLCanvasElement>(null);
   const { roomId, socket } = useRoom();
   useMouse({
     onDrawLine: handleDrawLine,
     onDrawShape: handleDrawShape,
     canvasRef,
-    canvasTempRef,
+    canvasShapeRef,
+    canvasMarkerRef,
   });
   useCanvas({ canvasRef });
   const tools = useTools();
-  const { tool, color, brushSize, isShapeTool, isShapeFill } = tools;
+  const { tool, color, brushSize, isShapeTool, isShapeFill, isMarkerTool } =
+    tools;
 
   function handleDrawLine({ ctx, currentPoint, prevPoint }: DrawLine) {
-    socket.emit("canvas-draw", {
-      prevPoint,
-      currentPoint,
-      roomId,
-      tool,
-      color,
-      brushSize,
-    });
+    if (!isMarkerTool) {
+      socket.emit("canvas-draw", {
+        prevPoint,
+        currentPoint,
+        roomId,
+        tool,
+        color,
+        brushSize,
+      });
+    }
     drawLine({
       ctx,
       prevPoint,
@@ -57,7 +62,13 @@ export default function Canvas() {
       <CanvasTools tools={tools} canvasRef={canvasRef} />
       <div className="relative w-[800px] bg-white cursor-canvas">
         <canvas
-          ref={canvasTempRef}
+          ref={canvasMarkerRef}
+          width={800}
+          height={600}
+          className={`absolute ${isMarkerTool ? "z-10" : ""}`}
+        />
+        <canvas
+          ref={canvasShapeRef}
           width={800}
           height={600}
           className={`absolute ${isShapeTool ? "z-10" : ""}`}

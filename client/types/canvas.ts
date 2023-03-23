@@ -21,13 +21,20 @@ export interface Tools {
   brushSize: number;
 }
 
-export type Tool = "pen" | "eraser" | "square" | "circle" | "straight";
+export type Tool =
+  | "pen"
+  | "eraser"
+  | "marker"
+  | "square"
+  | "circle"
+  | "straight";
 
 export type Shape = Extract<Tool, "square" | "circle" | "straight">;
 
 export interface ReturnTools extends Tools {
   isShapeTool: boolean;
   isShapeFill: boolean;
+  isMarkerTool: boolean;
   onShapeFillChange: (isChecked: boolean) => void;
   onToolChange: (type: string, value: string) => void;
 }

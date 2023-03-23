@@ -7,28 +7,32 @@ interface Props {
   onDrawLine: (props: DrawLine) => void;
   onDrawShape: (props: DrawLine) => void;
   canvasRef: RefObject<HTMLCanvasElement>;
-  canvasTempRef: RefObject<HTMLCanvasElement>;
+  canvasShapeRef: RefObject<HTMLCanvasElement>;
+  canvasMarkerRef: RefObject<HTMLCanvasElement>;
 }
 
 export default function useMouse({
   onDrawLine,
   onDrawShape,
   canvasRef,
-  canvasTempRef,
+  canvasShapeRef,
+  canvasMarkerRef,
 }: Props) {
   const [isMouseDown, setIsMouseDown] = useState(false);
   const prevPoint = useRef<Point | null>(null);
   const { socket, roomId } = useRoom();
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-    const canvasTemp = canvasTempRef.current;
-    const ctx = canvas?.getContext("2d");
-    const ctxTemp = canvasTemp?.getContext("2d", { willReadFrequently: true });
-    if (!canvas || !ctx || !canvasTemp || !ctxTemp) return;
+    const canvas = canvasRef.current!;
+    const canvasShape = canvasShapeRef.current!;
+    const canvasMarker = canvasMarkerRef.current!;
+    const ctx = canvas.getContext("2d")!;
+    const ctxShape = canvasShape.getContext("2d")!;
+    const ctxMarker = canvasMarker.getContext("2d")!;
 
     const handleMousedown = () => {
       setIsMouseDown(true);
+      ctx.globalCompositeOperation = "source-over";
     };
 
     const handleMousemove = (e: MouseEvent) => {
@@ -49,53 +53,90 @@ export default function useMouse({
       prevPoint.current = null;
     };
 
-    const handleTempMousedown = (e: MouseEvent) => {
+    const handleShapeMousedown = (e: MouseEvent) => {
       setIsMouseDown(true);
-      const currentPoint = computePoint(canvasTemp, e);
+      const currentPoint = computePoint(canvasShape, e);
       if (!currentPoint) return;
 
       prevPoint.current = currentPoint;
     };
 
-    const handleTempMousemove = (e: MouseEvent) => {
+    const handleShapeMousemove = (e: MouseEvent) => {
       if (!isMouseDown) return;
-      const currentPoint = computePoint(canvasTemp, e);
+      const currentPoint = computePoint(canvasShape, e);
       if (!currentPoint) return;
 
       onDrawShape({
-        ctx: ctxTemp,
+        ctx: ctxShape,
         currentPoint,
         prevPoint: prevPoint.current,
       });
     };
 
-    const handleTempMouseup = async () => {
+    const handleShapeMouseup = async () => {
       setIsMouseDown(false);
       prevPoint.current = null;
-      const canvas = canvasTemp.toDataURL();
+      const canvas = canvasShape.toDataURL();
       const img = new Image();
       img.src = canvas;
       img.onload = () => {
         ctx.drawImage(img, 0, 0);
         socket.emit("canvas-state", { roomId, canvas });
-        ctxTemp.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+        ctxShape.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+      };
+    };
+
+    const handleMarkerMousedown = () => {
+      setIsMouseDown(true);
+      ctx.globalCompositeOperation = "darken";
+    };
+
+    const handleMarkerMousemove = (e: MouseEvent) => {
+      if (!isMouseDown) return;
+      const currentPoint = computePoint(canvasMarker, e);
+      if (!currentPoint) return;
+
+      onDrawLine({
+        ctx: ctxMarker,
+        currentPoint,
+        prevPoint: prevPoint.current,
+      });
+      prevPoint.current = currentPoint;
+    };
+
+    const handleMarkerMouseup = () => {
+      setIsMouseDown(false);
+      prevPoint.current = null;
+      const canvas = canvasMarker.toDataURL();
+      const img = new Image();
+      img.src = canvas;
+      img.onload = () => {
+        ctx.drawImage(img, 0, 0);
+        socket.emit("canvas-state", { roomId, canvas });
+        ctxMarker.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
       };
     };
 
     canvas.addEventListener("mousedown", handleMousedown);
     canvas.addEventListener("mousemove", handleMousemove);
     canvas.addEventListener("mouseup", handleMouseup);
-    canvasTemp.addEventListener("mousedown", handleTempMousedown);
-    canvasTemp.addEventListener("mousemove", handleTempMousemove);
-    canvasTemp.addEventListener("mouseup", handleTempMouseup);
+    canvasShape.addEventListener("mousedown", handleShapeMousedown);
+    canvasShape.addEventListener("mousemove", handleShapeMousemove);
+    canvasShape.addEventListener("mouseup", handleShapeMouseup);
+    canvasMarker.addEventListener("mousedown", handleMarkerMousedown);
+    canvasMarker.addEventListener("mousemove", handleMarkerMousemove);
+    canvasMarker.addEventListener("mouseup", handleMarkerMouseup);
 
     return () => {
       canvas.removeEventListener("mousedown", handleMousedown);
       canvas.removeEventListener("mousemove", handleMousemove);
       canvas.removeEventListener("mouseup", handleMouseup);
-      canvasTemp.removeEventListener("mousedown", handleTempMousedown);
-      canvasTemp.removeEventListener("mousemove", handleTempMousemove);
-      canvasTemp.removeEventListener("mouseup", handleTempMouseup);
+      canvasShape.removeEventListener("mousedown", handleShapeMousedown);
+      canvasShape.removeEventListener("mousemove", handleShapeMousemove);
+      canvasShape.removeEventListener("mouseup", handleShapeMouseup);
+      canvasMarker.removeEventListener("mousedown", handleMarkerMousedown);
+      canvasMarker.removeEventListener("mousemove", handleMarkerMousemove);
+      canvasMarker.removeEventListener("mouseup", handleMarkerMouseup);
     };
   }, [isMouseDown, onDrawLine, onDrawShape]);
 }

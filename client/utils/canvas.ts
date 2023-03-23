@@ -16,7 +16,7 @@ export const drawLine = ({
   brushSize,
 }: Draw) => {
   if (!ctx) return;
-  const storkColor = tool === "pen" ? color : "#ffffff";
+  const storkColor = tool === "eraser" ? "#ffffff" : color;
 
   const startPoint = prevPoint ?? currentPoint;
   ctx.beginPath();

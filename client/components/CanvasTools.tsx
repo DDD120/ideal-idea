@@ -6,6 +6,7 @@ import Circle from "@/public/svg/circle.svg";
 import Straight from "@/public/svg/straight.svg";
 import Pen from "@/public/svg/pen.svg";
 import Eraser from "@/public/svg/eraser.svg";
+import Marker from "@/public/svg/marker.svg";
 import ImageDownload from "./ImageDownload";
 
 interface Props {
@@ -39,7 +40,6 @@ export default function CanvasTools({
     <div className="w-[200px] p-3">
       <fieldset>
         <h2>도형</h2>
-
         <input
           type="radio"
           id="square"
@@ -144,7 +144,7 @@ export default function CanvasTools({
         />
         <label
           htmlFor="eraser"
-          className="cursor-pointer p-1 flex  items-center gap-3 my-2"
+          className="cursor-pointer p-1 flex items-center gap-3 my-2"
         >
           <Eraser
             width="24"
@@ -154,6 +154,25 @@ export default function CanvasTools({
           <p className={tool === "eraser" ? "text-pink" : "text-white"}>
             지우개
           </p>
+        </label>
+        <input
+          type="radio"
+          id="marker"
+          name="tools"
+          value="marker"
+          onChange={handleToolChange}
+          className="hidden"
+        />
+        <label
+          htmlFor="marker"
+          className="cursor-pointer p-1 flex items-center gap-3 my-2"
+        >
+          <Marker
+            width="24"
+            height="24"
+            fill={tool === "marker" ? "#f76597" : "white"}
+          />
+          <p className={tool === "marker" ? "text-pink" : "text-white"}>마커</p>
         </label>
       </fieldset>
       <h2 className="my-1">크기</h2>
