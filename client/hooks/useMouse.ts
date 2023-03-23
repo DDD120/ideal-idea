@@ -51,6 +51,7 @@ export default function useMouse({
     const handleMouseup = () => {
       setIsMouseDown(false);
       prevPoint.current = null;
+      ctx.globalCompositeOperation = "source-over";
     };
 
     const handleShapeMousedown = (e: MouseEvent) => {

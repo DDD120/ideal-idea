@@ -41,6 +41,7 @@ export const drawShape = ({
   ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
   ctx.lineWidth = brushSize;
   ctx.strokeStyle = color;
+  ctx.fillStyle = color;
   ctx.lineCap = "round";
 
   switch (tool as Shape) {
