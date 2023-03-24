@@ -5,6 +5,7 @@ export interface Draw {
   currentPoint: Point;
   prevPoint: Point | null;
   isShapeFill?: boolean;
+  isMarkerTool?: boolean;
   ctx?: CanvasRenderingContext2D;
 }
 

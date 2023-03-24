@@ -14,11 +14,13 @@ export const drawLine = ({
   tool,
   color,
   brushSize,
+  isMarkerTool,
 }: Draw) => {
   if (!ctx) return;
   const storkColor = tool === "eraser" ? "#ffffff" : color;
-
   const startPoint = prevPoint ?? currentPoint;
+
+  ctx.globalCompositeOperation = isMarkerTool ? "darken" : "source-over";
   ctx.beginPath();
   ctx.lineWidth = brushSize;
   ctx.strokeStyle = storkColor;

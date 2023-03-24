@@ -15,6 +15,7 @@ export interface Draw {
   tool: string;
   color: string;
   brushSize: number;
+  isMarkerTool: boolean;
 }
 
 interface Point {
