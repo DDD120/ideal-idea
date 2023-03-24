@@ -39,3 +39,16 @@ export interface ReturnTools extends Tools {
   onShapeFillChange: (isChecked: boolean) => void;
   onToolChange: (type: string, value: string) => void;
 }
+
+export interface User {
+  id: string;
+  nickname: Nickname;
+}
+
+export interface Message {
+  type: "user" | "notice";
+  nickname?: Nickname;
+  content: string;
+}
+
+export type Nickname = "토끼" | "고양이" | "강아지" | "여우";

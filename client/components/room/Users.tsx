@@ -1,6 +1,6 @@
 import Invite from "@/public/svg/invite.svg";
 import { useRoom } from "@/store/room";
-import { User } from "@/types/room";
+import { User } from "@/utils/types";
 import Image from "next/image";
 import Button from "./Button";
 

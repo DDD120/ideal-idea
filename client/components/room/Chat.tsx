@@ -2,7 +2,7 @@ import MessageInput from "@/components/room/MessageInput";
 import useChat from "@/hooks/useChat";
 import { useEffect, useRef } from "react";
 import { useRoom } from "@/store/room";
-import { Nickname } from "@/types/room";
+import { Nickname } from "@/utils/types";
 import Image from "next/image";
 import { profileImage } from "./Users";
 import { v1 as timestamp } from "uuid";

@@ -1,6 +1,6 @@
 import { useRoom } from "@/store/room";
-import { Draw } from "@/types/canvas";
-import { clearCanvas, drawLine } from "@/utils/canvas";
+import { Draw } from "@/utils/types";
+import { clearCanvas, drawLine } from "@/utils/drawCanvas";
 import { RefObject, useEffect } from "react";
 
 interface Props {
@@ -11,9 +11,8 @@ export default function useCanvas({ canvasRef }: Props) {
   const { roomId, socket } = useRoom();
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-    const ctx = canvas?.getContext("2d");
-    if (!canvas || !ctx) return;
+    const canvas = canvasRef.current!;
+    const ctx = canvas?.getContext("2d")!;
 
     socket.emit("canvas-ready", roomId);
     socket.on("canvas-ready", () => {

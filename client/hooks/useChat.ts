@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Message } from "@/types/room";
+import { Message } from "@/utils/types";
 import { useRoom } from "@/store/room";
 
 export default function useChat() {

@@ -1,6 +1,6 @@
 import { useRoom } from "@/store/room";
-import { DrawLine, Point } from "@/types/canvas";
-import { computePoint } from "@/utils/canvas";
+import { DrawLine, Point } from "@/utils/types";
+import { computePoint } from "@/utils/drawCanvas";
 import { RefObject, useEffect, useRef, useState } from "react";
 
 interface Props {

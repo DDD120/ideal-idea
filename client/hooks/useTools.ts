@@ -1,4 +1,4 @@
-import { ReturnTools, Shape, Tool } from "@/types/canvas";
+import { ReturnTools, Shape, Tool } from "@/utils/types";
 import { useState } from "react";
 
 const shape: Shape[] = ["square", "circle", "straight"];

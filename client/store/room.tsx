@@ -22,6 +22,7 @@ export function RoomProvider({ children }: Props) {
   useEffect(() => {
     if (router.isReady) {
       if (!router.query.c) {
+        window.alert("채널이 없는 방입니다.");
         router.push("/");
       }
     }

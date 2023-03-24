@@ -2,8 +2,8 @@ import useCanvas from "@/hooks/useCanvas";
 import useMouse from "@/hooks/useMouse";
 import useTools from "@/hooks/useTools";
 import { useRoom } from "@/store/room";
-import { DrawLine } from "@/types/canvas";
-import { drawLine, drawShape } from "@/utils/canvas";
+import { DrawLine } from "@/utils/types";
+import { drawLine, drawShape } from "@/utils/drawCanvas";
 import { useRef } from "react";
 import CanvasTools from "./CanvasTools";
 

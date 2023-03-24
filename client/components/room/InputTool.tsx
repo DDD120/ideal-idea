@@ -4,7 +4,7 @@ import Straight from "@/public/svg/straight.svg";
 import Pen from "@/public/svg/pen.svg";
 import Eraser from "@/public/svg/eraser.svg";
 import Marker from "@/public/svg/marker.svg";
-import { Tool } from "@/types/canvas";
+import { Tool } from "@/utils/types";
 import { ChangeEvent } from "react";
 
 interface Props {

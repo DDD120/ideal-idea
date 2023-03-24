@@ -19,8 +19,7 @@ export default function ImageDownload({ canvasURL, onClose, ...rest }: Props) {
   };
 
   const handleBgColorChange = (value: string) => {
-    const ctx = canvasRef.current?.getContext("2d");
-    if (!ctx) return;
+    const ctx = canvasRef.current?.getContext("2d")!;
     if (value === "white") {
       ctx.fillStyle = "#ffffff";
       ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
@@ -32,14 +31,14 @@ export default function ImageDownload({ canvasURL, onClose, ...rest }: Props) {
   };
 
   const handleDownloadClick = () => {
-    const canvas = canvasRef.current;
-    const ctx = canvas?.getContext("2d");
-    if (!ctx || !canvas || !canvasURL) return;
+    const canvas = canvasRef.current!;
+    const ctx = canvas.getContext("2d")!;
+    if (!canvasURL) return;
     const img = new Image();
     img.src = canvasURL;
     img.onload = () => {
       ctx.drawImage(img, 0, 0);
-      const imageURL = canvas?.toDataURL();
+      const imageURL = canvas.toDataURL();
       const link = document.createElement("a");
       link.href = imageURL;
       link.download = saveAsName;

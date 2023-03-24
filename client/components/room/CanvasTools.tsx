@@ -1,5 +1,5 @@
 import { useRoom } from "@/store/room";
-import { ReturnTools } from "@/types/canvas";
+import { ReturnTools } from "@/utils/types";
 import { ChangeEvent, RefObject, useState } from "react";
 import Button from "./Button";
 import ImageDownload from "./ImageDownload";

@@ -1,4 +1,4 @@
-import { Draw, Shape } from "@/types/canvas";
+import { Draw, Shape } from "@/utils/types";
 
 export const computePoint = (canvas: HTMLCanvasElement, e: MouseEvent) => {
   const rect = canvas.getBoundingClientRect();
