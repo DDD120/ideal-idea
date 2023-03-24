@@ -1,4 +1,4 @@
-import MessageInput from "@/components/MessageInput";
+import MessageInput from "@/components/room/MessageInput";
 import useChat from "@/hooks/useChat";
 import { useEffect, useRef } from "react";
 import { useRoom } from "@/store/room";
@@ -50,7 +50,7 @@ export default function Chat({ myNickname }: Props) {
                 <div>
                   <h3
                     className={
-                      message.nickname === myNickname ? "text-pink" : undefined
+                      message.nickname === myNickname ? "text-pink" : ""
                     }
                   >
                     {message.nickname}

@@ -2,6 +2,7 @@ import Invite from "@/public/svg/invite.svg";
 import { useRoom } from "@/store/room";
 import { User } from "@/types/room";
 import Image from "next/image";
+import Button from "./Button";
 
 interface Props {
   users: User[];
@@ -36,23 +37,18 @@ export default function Users({ users, myNickname }: Props) {
                 height={100}
               />
             </div>
-            <h3
-              className={user.nickname === myNickname ? "text-pink" : undefined}
-            >
+            <h3 className={user.nickname === myNickname ? "text-pink" : ""}>
               {user.nickname}
             </h3>
           </li>
         ))}
       </ul>
-      <button
-        className="bg-pink w-full p-2 rounded-sm relative active:top-[1px] hover:brightness-95"
-        onClick={handleInviteClick}
-      >
+      <Button bgColor="pink" onClick={handleInviteClick}>
         <span className="flex justify-center items-center gap-1">
           초대
           <Invite width="12" height="12" fill="white" />
         </span>
-      </button>
+      </Button>
     </div>
   );
 }

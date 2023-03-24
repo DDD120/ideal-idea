@@ -1,8 +1,8 @@
 import { useRouter } from "next/router";
 import { Canvas } from "@react-three/fiber";
 import { Html, OrbitControls, Stars } from "@react-three/drei";
-import Camera from "@/components/Camera";
-import FloatText3D from "@/components/FloatText3D";
+import Camera from "@/components/main/Camera";
+import FloatText3D from "@/components/main/FloatText3D";
 import { v4 as uuid } from "uuid";
 
 export default function Home() {

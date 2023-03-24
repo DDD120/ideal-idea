@@ -1,5 +1,6 @@
 import { ChangeEvent, useRef, useState } from "react";
 import Modal from "react-modal";
+import Button from "./Button";
 
 interface Props {
   canvasURL: string | undefined;
@@ -110,12 +111,9 @@ export default function ImageDownload({ canvasURL, onClose, ...rest }: Props) {
               className="w-full bg-navy-700 outline-none p-2 my-1"
             />
           </div>
-          <button
-            className="bg-pink w-full p-2 rounded-sm relative active:top-[1px] hover:brightness-95"
-            onClick={handleDownloadClick}
-          >
+          <Button bgColor="pink" onClick={handleDownloadClick}>
             다운로드
-          </button>
+          </Button>
           <canvas ref={canvasRef} width={800} height={600} className="hidden" />
         </div>
       </div>

@@ -1,5 +1,5 @@
-import Canvas from "@/components/Canvas";
-import Panel from "@/components/Panel";
+import Canvas from "@/components/room/Canvas";
+import Panel from "@/components/room/Panel";
 import { RoomProvider } from "@/store/room";
 
 export default function Room() {
