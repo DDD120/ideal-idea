@@ -1,4 +1,4 @@
-import { useRoom } from "@/store/room";
+import { useRoomContext } from "@/context/roomContext";
 import { DrawLine, Point } from "@/utils/types";
 import { computePoint } from "@/utils/drawCanvas";
 import { RefObject, useEffect, useRef, useState } from "react";
@@ -18,7 +18,7 @@ export default function useMouse({
 }: Props) {
   const [isMouseDown, setIsMouseDown] = useState(false);
   const prevPoint = useRef<Point | null>(null);
-  const { socket, roomId } = useRoom();
+  const { socket, roomId } = useRoomContext();
 
   useEffect(() => {
     const canvas = canvasRef.current!;
@@ -28,7 +28,6 @@ export default function useMouse({
 
     const handleMousedown = () => {
       setIsMouseDown(true);
-      ctx.globalCompositeOperation = "source-over";
     };
 
     const handleMousemove = (e: MouseEvent) => {
@@ -47,7 +46,6 @@ export default function useMouse({
     const handleMouseup = () => {
       setIsMouseDown(false);
       prevPoint.current = null;
-      ctx.globalCompositeOperation = "source-over";
     };
 
     const handleShapeMousedown = (e: MouseEvent) => {

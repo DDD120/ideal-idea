@@ -1,5 +1,5 @@
 import Invite from "@/public/svg/invite.svg";
-import { useRoom } from "@/store/room";
+import { useRoomContext } from "@/context/roomContext";
 import { User } from "@/utils/types";
 import Image from "next/image";
 import Button from "./Button";
@@ -17,7 +17,7 @@ export const profileImage = {
 };
 
 export default function Users({ users, myNickname }: Props) {
-  const { roomId } = useRoom();
+  const { roomId } = useRoomContext();
 
   const handleInviteClick = () => {
     navigator.clipboard.writeText(`${window.location.href}?c=${roomId}`);

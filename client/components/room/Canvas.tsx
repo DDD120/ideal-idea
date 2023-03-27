@@ -1,7 +1,7 @@
 import useCanvas from "@/hooks/useCanvas";
 import useMouse from "@/hooks/useMouse";
 import useTools from "@/hooks/useTools";
-import { useRoom } from "@/store/room";
+import { useRoomContext } from "@/context/roomContext";
 import { DrawLine } from "@/utils/types";
 import { drawLine, drawShape } from "@/utils/drawCanvas";
 import { useRef } from "react";
@@ -10,7 +10,7 @@ import CanvasTools from "./CanvasTools";
 export default function Canvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const canvasTempRef = useRef<HTMLCanvasElement>(null);
-  const { roomId, socket } = useRoom();
+  const { roomId, socket } = useRoomContext();
   useMouse({
     onDrawLine: handleDrawLine,
     onDrawShape: handleDrawShape,

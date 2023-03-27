@@ -1,10 +1,20 @@
-import { useEffect, useState } from "react";
-import { Message } from "@/utils/types";
-import { useRoom } from "@/store/room";
+import { useEffect, useRef, useState } from "react";
+import { Message, Nickname } from "@/utils/types";
+import { useRoomContext } from "@/context/roomContext";
 
 export default function useChat() {
   const [messages, setMessages] = useState<Message[]>([]);
-  const { socket } = useRoom();
+  const { socket, roomId } = useRoomContext();
+  const scrollRef = useRef<HTMLLIElement>(null);
+
+  const handleSetMessage = (content: string, nickname: Nickname) => {
+    setMessages((prev) => [...prev, { type: "user", nickname, content }]);
+    socket.emit("message", {
+      roomId,
+      nickname,
+      content,
+    });
+  };
 
   useEffect(() => {
     socket.on("message", (message: Message) => {
@@ -16,8 +26,13 @@ export default function useChat() {
     };
   }, [socket]);
 
+  useEffect(() => {
+    scrollRef.current?.scrollIntoView();
+  }, [messages]);
+
   return {
     messages,
-    setMessages,
+    onSetMessage: handleSetMessage,
+    scrollRef,
   };
 }

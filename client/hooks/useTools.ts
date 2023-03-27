@@ -1,5 +1,6 @@
+import { useRoomContext } from "@/context/roomContext";
 import { ReturnTools, Shape, Tool } from "@/utils/types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const shape: Shape[] = ["square", "circle", "straight"];
 
@@ -11,28 +12,80 @@ export default function useTools(): ReturnTools {
   const [color, setColor] = useState("#000000");
   const [brushSize, setBrushSize] = useState(5);
 
+  const { isMsgActive } = useRoomContext();
+
   const handleShapeFillChange = (isChecked: boolean) => {
     setIsShapeFill(isChecked);
   };
 
-  const handleToolChange = (type: string, value: string) => {
-    if (!value) return;
-    switch (type) {
-      case "color":
-        setColor(value);
-        break;
-      case "brush":
-        setBrushSize(Number(value));
-        break;
-      case "tool":
-        setTool(value as Tool);
-        shape.some((item) => item === value)
-          ? setIsShapeTool(true)
-          : setIsShapeTool(false);
-        value === "marker" ? setIsMarkerTool(true) : setIsMarkerTool(false);
-        break;
-    }
+  const handleColorChange = (color: string) => {
+    setColor(color);
   };
+
+  const handleToolSizeChange = (size: string) => {
+    setBrushSize(Number(size));
+  };
+
+  const handleToolChange = (tool: Tool) => {
+    setTool(tool);
+    shape.some((item) => item === tool)
+      ? setIsShapeTool(true)
+      : setIsShapeTool(false);
+    tool === "marker" ? setIsMarkerTool(true) : setIsMarkerTool(false);
+  };
+
+  const keyEvent: Record<string, () => void> = {
+    r: () => {
+      handleToolChange("square");
+    },
+    c: () => {
+      handleToolChange("circle");
+    },
+    s: () => {
+      handleToolChange("straight");
+    },
+    p: () => {
+      handleToolChange("pen");
+    },
+    e: () => {
+      handleToolChange("eraser");
+    },
+    m: () => {
+      handleToolChange("marker");
+    },
+    f: () => {
+      setIsShapeFill((prev) => !prev);
+    },
+    "]": () => {
+      setBrushSize((prevSize) => prevSize + 1);
+    },
+    "[": () => {
+      setBrushSize((prevSize) => prevSize - 1);
+    },
+  };
+
+  useEffect(() => {
+    const handleKeypress = (e: globalThis.KeyboardEvent) => {
+      if (isMsgActive) return;
+      if (e.key === "[" || e.key === "]") {
+        keyEvent[e.key]();
+      }
+    };
+
+    const handleKeyup = (e: globalThis.KeyboardEvent) => {
+      console.log(e.key);
+      if (isMsgActive) return;
+      if (e.key === "[" || e.key === "]") return;
+      keyEvent[e.key] && keyEvent[e.key]();
+    };
+
+    document.addEventListener("keypress", handleKeypress);
+    document.addEventListener("keyup", handleKeyup);
+    return () => {
+      document.removeEventListener("keypress", handleKeypress);
+      document.removeEventListener("keyup", handleKeyup);
+    };
+  }, [isMsgActive]);
 
   return {
     tool,
@@ -42,6 +95,8 @@ export default function useTools(): ReturnTools {
     isShapeTool,
     isMarkerTool,
     onShapeFillChange: handleShapeFillChange,
+    onColorChange: handleColorChange,
+    onBrushSizeChange: handleToolSizeChange,
     onToolChange: handleToolChange,
   };
 }

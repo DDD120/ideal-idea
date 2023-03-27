@@ -1,10 +1,10 @@
 import { User } from "./../utils/types";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { useRoom } from "@/store/room";
+import { useRoomContext } from "@/context/roomContext";
 
 export default function useUsers() {
-  const { roomId, socket } = useRoom();
+  const { roomId, socket } = useRoomContext();
   const [users, setUsers] = useState<User[]>([]);
   const [me, setMe] = useState<User>({ id: socket.id, nickname: "토끼" });
   const router = useRouter();

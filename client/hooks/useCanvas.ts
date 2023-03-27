@@ -1,4 +1,4 @@
-import { useRoom } from "@/store/room";
+import { useRoomContext } from "@/context/roomContext";
 import { Draw } from "@/utils/types";
 import { clearCanvas, drawLine } from "@/utils/drawCanvas";
 import { RefObject, useEffect } from "react";
@@ -8,7 +8,7 @@ interface Props {
 }
 
 export default function useCanvas({ canvasRef }: Props) {
-  const { roomId, socket } = useRoom();
+  const { roomId, socket } = useRoomContext();
 
   useEffect(() => {
     const canvas = canvasRef.current!;

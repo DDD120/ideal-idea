@@ -37,7 +37,9 @@ export interface ReturnTools extends Tools {
   isShapeFill: boolean;
   isMarkerTool: boolean;
   onShapeFillChange: (isChecked: boolean) => void;
-  onToolChange: (type: string, value: string) => void;
+  onColorChange: (color: string) => void;
+  onBrushSizeChange: (size: string) => void;
+  onToolChange: (tool: Tool) => void;
 }
 
 export interface User {

@@ -3,6 +3,8 @@ import dynamic from "next/dynamic";
 import { EmojiClickData, EmojiStyle } from "emoji-picker-react";
 import Emoji from "@/public/svg/emoji.svg";
 import Send from "@/public/svg/send.svg";
+import { Nickname } from "@/utils/types";
+import { useRoomContext } from "@/context/roomContext";
 
 const EmojiPicker = dynamic(
   () => {
@@ -12,18 +14,22 @@ const EmojiPicker = dynamic(
 );
 
 interface Props {
-  onSetMessage: (message: string) => void;
+  nickname: Nickname;
+  onSetMessage: (message: string, nickname: Nickname) => void;
 }
 
-export default function MessageInput({ onSetMessage }: Props) {
+export default function MessageInput({ nickname, onSetMessage }: Props) {
   const [content, setContent] = useState("");
   const [isShowEmojiPicker, setIsShowEmojiPicker] = useState(false);
+  const {
+    actions: { onFocus, onBlur },
+  } = useRoomContext();
 
   const handleSendClick = () => {
     if (!content) {
       return;
     }
-    onSetMessage(content);
+    onSetMessage(content, nickname);
     setContent("");
   };
 
@@ -48,6 +54,8 @@ export default function MessageInput({ onSetMessage }: Props) {
         onChange={handleInputChange}
         onKeyUp={(e) => e.key === "Enter" && handleSendClick()}
         className="bg-navy-700 w-full py-2 px-4 outline-none"
+        onFocus={onFocus}
+        onBlur={onBlur}
       />
       <button
         onClick={handleEmojiPickerClick}

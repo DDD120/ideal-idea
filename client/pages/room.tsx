@@ -1,6 +1,6 @@
 import Canvas from "@/components/room/Canvas";
 import Panel from "@/components/room/Panel";
-import { RoomProvider } from "@/store/room";
+import { RoomProvider } from "@/context/roomContext";
 
 export default function Room() {
   return (

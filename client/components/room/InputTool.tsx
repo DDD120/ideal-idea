@@ -11,6 +11,7 @@ interface Props {
   currentTool: Tool;
   tool: Tool;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  shortcut: string;
   children: React.ReactNode;
 }
 
@@ -18,6 +19,7 @@ export default function InputTool({
   currentTool,
   tool,
   onChange,
+  shortcut,
   children,
 }: Props) {
   const iconDefaultProps = {
@@ -47,6 +49,7 @@ export default function InputTool({
       <label
         htmlFor={tool}
         className="cursor-pointer p-1 flex items-center gap-3 my-2"
+        title={shortcut}
       >
         <>
           {icon[tool]}

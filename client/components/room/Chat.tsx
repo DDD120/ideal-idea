@@ -1,7 +1,5 @@
 import MessageInput from "@/components/room/MessageInput";
 import useChat from "@/hooks/useChat";
-import { useEffect, useRef } from "react";
-import { useRoom } from "@/store/room";
 import { Nickname } from "@/utils/types";
 import Image from "next/image";
 import { profileImage } from "./Users";
@@ -12,25 +10,7 @@ interface Props {
 }
 
 export default function Chat({ myNickname }: Props) {
-  const { messages, setMessages } = useChat();
-  const { roomId, socket } = useRoom();
-  const scrollRef = useRef<HTMLLIElement>(null);
-
-  const handleSetMessage = (content: string) => {
-    setMessages((prev) => [
-      ...prev,
-      { type: "user", nickname: myNickname, content },
-    ]);
-    socket.emit("message", {
-      roomId,
-      nickname: myNickname,
-      content,
-    });
-  };
-
-  useEffect(() => {
-    scrollRef.current?.scrollIntoView();
-  }, [messages]);
+  const { messages, onSetMessage, scrollRef } = useChat();
 
   return (
     <div className="flex-1 grow-0">
@@ -65,7 +45,7 @@ export default function Chat({ myNickname }: Props) {
         ))}
         <li ref={scrollRef} />
       </ul>
-      <MessageInput onSetMessage={handleSetMessage} />
+      <MessageInput nickname={myNickname} onSetMessage={onSetMessage} />
     </div>
   );
 }
