@@ -1,5 +1,4 @@
 import { Float, Text3D } from "@react-three/drei";
-import maplestory from "@/public/Maplestory_Bold.json";
 import { Vector3 } from "@react-three/fiber";
 
 interface Props {
@@ -10,7 +9,7 @@ interface Props {
 function FloatChar({ position, children }: Props) {
   return (
     <Float position={position}>
-      <Text3D font={maplestory as string}>
+      <Text3D font={"/Maplestory_Bold.json"}>
         {children}
         <meshPhysicalMaterial />
       </Text3D>
