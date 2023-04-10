@@ -5,10 +5,6 @@ export default function Document() {
     <Html lang="ko" className="h-full">
       <Head>
         <title>ideal idea</title>
-        <meta
-          name="description"
-          content="이상적인 아이디어를 도출할 공유 캔버스 사이트"
-        />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="shortcut icon" href="/favicon.ico" />
       </Head>
