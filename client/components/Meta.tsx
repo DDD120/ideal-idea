@@ -7,6 +7,9 @@ interface Props {
 export default function Meta({ description }: Props) {
   return (
     <Head>
+      <title>ideal idea</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <link rel="shortcut icon" href="/favicon.ico" />
       <meta name="description" content={description} />
       <meta
         name="Keywords"
