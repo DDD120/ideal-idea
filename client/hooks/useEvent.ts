@@ -10,7 +10,7 @@ interface Props {
   canvasTempRef: RefObject<HTMLCanvasElement>;
 }
 
-export default function useMouse({
+export default function useEvent({
   onDrawLine,
   onDrawShape,
   canvasRef,
@@ -26,11 +26,12 @@ export default function useMouse({
     const ctx = canvas.getContext("2d")!;
     const ctxShape = canvasTemp.getContext("2d")!;
 
-    const handleMousedown = () => {
+    const drawLineStart = () => {
       setIsMouseDown(true);
     };
 
-    const handleMousemove = (e: MouseEvent) => {
+    const drawingLine = <T extends MouseEvent | TouchEvent>(e: T) => {
+      e.preventDefault();
       if (!isMouseDown) return;
       const currentPoint = computePoint(canvas, e);
       if (!currentPoint) return;
@@ -43,12 +44,12 @@ export default function useMouse({
       prevPoint.current = currentPoint;
     };
 
-    const handleMouseup = () => {
+    const drawLineEnd = () => {
       setIsMouseDown(false);
       prevPoint.current = null;
     };
 
-    const handleShapeMousedown = (e: MouseEvent) => {
+    const drawShapeStart = <T extends MouseEvent | TouchEvent>(e: T) => {
       setIsMouseDown(true);
       const currentPoint = computePoint(canvasTemp, e);
       if (!currentPoint) return;
@@ -56,7 +57,8 @@ export default function useMouse({
       prevPoint.current = currentPoint;
     };
 
-    const handleShapeMousemove = (e: MouseEvent) => {
+    const drawingShape = <T extends MouseEvent | TouchEvent>(e: T) => {
+      e.preventDefault();
       if (!isMouseDown) return;
       const currentPoint = computePoint(canvasTemp, e);
       if (!currentPoint) return;
@@ -68,7 +70,7 @@ export default function useMouse({
       });
     };
 
-    const handleShapeMouseup = async () => {
+    const drawShapeEnd = async () => {
       setIsMouseDown(false);
       prevPoint.current = null;
       const canvas = canvasTemp.toDataURL();
@@ -81,20 +83,32 @@ export default function useMouse({
       };
     };
 
-    canvas.addEventListener("mousedown", handleMousedown);
-    canvas.addEventListener("mousemove", handleMousemove);
-    canvas.addEventListener("mouseup", handleMouseup);
-    canvasTemp.addEventListener("mousedown", handleShapeMousedown);
-    canvasTemp.addEventListener("mousemove", handleShapeMousemove);
-    canvasTemp.addEventListener("mouseup", handleShapeMouseup);
+    canvas.addEventListener("mousedown", drawLineStart);
+    canvas.addEventListener("mousemove", drawingLine);
+    canvas.addEventListener("mouseup", drawLineEnd);
+    canvasTemp.addEventListener("mousedown", drawShapeStart);
+    canvasTemp.addEventListener("mousemove", drawingShape);
+    canvasTemp.addEventListener("mouseup", drawShapeEnd);
+    canvas.addEventListener("touchstart", drawLineStart);
+    canvas.addEventListener("touchmove", drawingLine);
+    canvas.addEventListener("touchend", drawLineEnd);
+    canvasTemp.addEventListener("touchstart", drawShapeStart);
+    canvasTemp.addEventListener("touchmove", drawingShape);
+    canvasTemp.addEventListener("touchend", drawShapeEnd);
 
     return () => {
-      canvas.removeEventListener("mousedown", handleMousedown);
-      canvas.removeEventListener("mousemove", handleMousemove);
-      canvas.removeEventListener("mouseup", handleMouseup);
-      canvasTemp.removeEventListener("mousedown", handleShapeMousedown);
-      canvasTemp.removeEventListener("mousemove", handleShapeMousemove);
-      canvasTemp.removeEventListener("mouseup", handleShapeMouseup);
+      canvas.removeEventListener("mousedown", drawLineStart);
+      canvas.removeEventListener("mousemove", drawingLine);
+      canvas.removeEventListener("mouseup", drawLineEnd);
+      canvasTemp.removeEventListener("mousedown", drawShapeStart);
+      canvasTemp.removeEventListener("mousemove", drawingShape);
+      canvasTemp.removeEventListener("mouseup", drawShapeEnd);
+      canvas.removeEventListener("touchstart", drawLineStart);
+      canvas.removeEventListener("touchmove", drawingLine);
+      canvas.removeEventListener("touchend", drawLineEnd);
+      canvasTemp.removeEventListener("touchstart", drawShapeStart);
+      canvasTemp.removeEventListener("touchmove", drawingShape);
+      canvasTemp.removeEventListener("touchend", drawShapeEnd);
     };
   }, [isMouseDown, onDrawLine, onDrawShape]);
 }

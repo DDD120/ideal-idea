@@ -1,7 +1,15 @@
 import { Draw, Shape } from "@/utils/types";
 
-export const computePoint = (canvas: HTMLCanvasElement, e: MouseEvent) => {
+export const computePoint = (
+  canvas: HTMLCanvasElement,
+  e: MouseEvent | TouchEvent
+) => {
   const rect = canvas.getBoundingClientRect();
+  if (e instanceof TouchEvent) {
+    const x = e.touches[0].clientX - rect.left;
+    const y = e.touches[0].clientY - rect.top;
+    return { x, y };
+  }
   const x = e.clientX - rect.left;
   const y = e.clientY - rect.top;
   return { x, y };
