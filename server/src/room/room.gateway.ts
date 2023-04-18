@@ -10,7 +10,7 @@ import { User, Draw } from './room.entity';
 
 @WebSocketGateway({
   cors: {
-    origin: ['http://localhost:3000'],
+    origin: ['https://ideal-idea.vercel.app'],
   },
 })
 export class RoomGateway implements OnGatewayConnection {
