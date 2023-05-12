@@ -9,6 +9,8 @@
 - 실시간 캔버스 선, 도형 그리기 기능
 - 실시간 채팅 메시지 기능
 
+[Blog 글](https://ddd120.tistory.com/57)
+
 ## 기술 스택
 
 ### Front-end
@@ -19,9 +21,9 @@ Next.js, Typescript, Tailwind CSS, Socket IO, Three.js
 
 Nest.js, Socket IO
 
-### Environment
+### Deploy
 
-VS-code, Git, GitHub
+GitHub Pages, Github Actions, Google App Engine
 
 ## 구현 기능
 
