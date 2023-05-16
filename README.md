@@ -15,11 +15,11 @@
 
 ### Front-end
 
-Next.js, Typescript, Tailwind CSS, Socket IO, Three.js
+Next, TypeScript, Tailwind CSS, Socket IO, Three.js
 
 ### Back-end
 
-Nest.js, Socket IO
+Nest, Socket IO
 
 ### Deploy
 
